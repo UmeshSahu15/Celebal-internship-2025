@@ -37,53 +37,56 @@ Execute basic Linux commands to manipulate files and directories, with an emphas
     
           cd directory_name
     
-   ![Screenshot 2025-06-07 192443](https://github.com/user-attachments/assets/9e1cd6a7-23da-4e13-ad7d-c95976ad90ba)
+  ![WhatsApp Image 2025-06-08 at 11 20 20_640490ab](https://github.com/user-attachments/assets/083a8f87-86b4-4744-8414-8e1921e29e64)
+
 
     - *cd ..*: Move up one directory level.
     
           cd ..
     
-    ![Screenshot (32)](https://github.com/manish-g0u74m/celebaltech-inturn/assets/148465299/0c7c9c33-d5d2-4cda-8f41-ba413248a6b7)
+   ![WhatsApp Image 2025-06-08 at 11 20 17_c7adb8c3](https://github.com/user-attachments/assets/71946d9d-7407-4c11-9b52-5fb749025dfa)
+
 
     - **cd ~**: Change to the home directory.
     
           cd ~
     
    
-![Screenshot 2025-06-07 192634](https://github.com/user-attachments/assets/f2e93f87-586c-4e2e-ab4f-1941d66e9c3e)
+![WhatsApp Image 2025-06-08 at 11 20 18_0ecf1690](https://github.com/user-attachments/assets/f1b0ffb4-7ba2-4b4a-8005-4afe182fdac3)
 
 3. *Make Directory*
     - *mkdir new_directory*: Create a new directory.
     
           mkdir new_directory
     
-    ![Screenshot 2025-06-07 192655](https://github.com/user-attachments/assets/b8b9b929-4e75-429d-87c5-b092b7a69788)
+   ![WhatsApp Image 2025-06-08 at 11 20 20_a5d9569b](https://github.com/user-attachments/assets/4a3c085b-2021-470a-8254-57b0bad97816)
 
     - *mkdir -p parent_directory/new_directory*: Create nested directories with a single command.
    
           mkdir -p parent_directory/new_directory
     
-   ![Screenshot 2025-06-07 192807](https://github.com/user-attachments/assets/d62cd253-8ad4-4943-b93d-c125de53a86c)
+  ![WhatsApp Image 2025-06-08 at 11 20 19_9c3f4234](https://github.com/user-attachments/assets/288bdbe9-9908-4bca-a9fc-2da336e660a5)
+
 
 4. *Remove Directory*
     - *rmdir directory_name*: Remove an empty directory.
   
           rmdir directory_name
   
-  ![Screenshot 2025-06-07 192945](https://github.com/user-attachments/assets/743668d6-403a-411c-a8fd-f2e2ce373b51)
+ ![WhatsApp Image 2025-06-08 at 11 20 19_82952b77](https://github.com/user-attachments/assets/01099ade-4aa8-4e9e-8ce1-a4b82b3f27f9)
 
     - *rm -r directory_name*: Remove a directory and its contents recursively.
     
           rm -r directory_name
     
-   ![Screenshot 2025-06-07 193004](https://github.com/user-attachments/assets/bb4dbc57-314c-473d-aa84-866c507e2659)
+  ![WhatsApp Image 2025-06-08 at 11 20 19_956e0bb1](https://github.com/user-attachments/assets/468f797e-7e72-46e1-a61f-b43dcbe632fa)
 
 5. *Create a File*
     - *touch newfile.txt*: Create a new, empty file.
     
           touch newfile.txt
     
-   ![Screenshot 2025-06-07 174532](https://github.com/user-attachments/assets/12054832-aeea-4b5a-9075-b2979980dd4b)
+  ![WhatsApp Image 2025-06-08 at 11 20 20_aca3ed32](https://github.com/user-attachments/assets/9c43e2aa-b47a-433b-85b7-96bdbcc87316)
 
 6. *Remove a File*
     - *rm filename*: Remove a file.
@@ -97,7 +100,7 @@ Execute basic Linux commands to manipulate files and directories, with an emphas
    
           mv old_name new_name
     
-    ![Screenshot 2025-06-07 193122](https://github.com/user-attachments/assets/aa3be6f4-841f-4176-9326-86594aa956c0)
+   ![WhatsApp Image 2025-06-08 at 11 20 20_5af6ad09](https://github.com/user-attachments/assets/dcfa5b63-1e74-4aea-bc13-297a17039de3)
 
     - *mv filename /path/to/destination*: Move a file to a different directory.
    
@@ -110,26 +113,27 @@ Execute basic Linux commands to manipulate files and directories, with an emphas
   
           cp filename /path/to/destination
     
-   ![Screenshot 2025-06-07 193240](https://github.com/user-attachments/assets/b841eb86-3d75-486c-86b0-f11b22647169)
+![image](https://github.com/user-attachments/assets/aded57de-21df-4a82-8248-55df198ae43c)
 
     - *cp -r source_directory /path/to/destination*: Copy a directory and its contents recursively.
-   
-          cp -r source_directory /path/to/destination
+       cp -r source_directory /path/to/destination
     
-    ![Screenshot (44)](https://github.com/manish-g0u74m/celebaltech-inturn/assets/148465299/7c506789-0459-4696-a9a2-c77f805b2826)
+![image](https://github.com/user-attachments/assets/53a51601-6992-482c-b351-0f7014c957d7)
+
 
 10. *Display File Contents*
     - *cat > filename*: Add Content in a file.
   
           cat > filename
     
-    ![Screenshot 2025-06-07 193404](https://github.com/user-attachments/assets/9ac23fad-2dd6-451e-9ba9-6b416dfec2d9)
+  ![WhatsApp Image 2025-06-08 at 11 20 21_09b4200a](https://github.com/user-attachments/assets/401c5a99-47b8-4bb7-98c0-436254726482)
 
      - *cat filename*: Display the contents of a file.
     
            cat filename
     
- ![Screenshot 2025-06-07 193429](https://github.com/user-attachments/assets/e340cb03-6e72-412f-9489-90fdfd743f48)
+![WhatsApp Image 2025-06-08 at 11 20 22_786779fa](https://github.com/user-attachments/assets/40958291-cd9a-427d-897b-bc87120a966d)
+
 
 
 11. *Print Working Directory*
@@ -137,7 +141,8 @@ Execute basic Linux commands to manipulate files and directories, with an emphas
     
           pwd
  
- ![Screenshot 2025-06-07 193439](https://github.com/user-attachments/assets/ef9c5af9-7f4e-40d7-8a1c-8c653561233a)
+![WhatsApp Image 2025-06-08 at 11 20 23_f08f2400](https://github.com/user-attachments/assets/8fe0d054-0dad-40ed-9fe1-e9e36fbc02a3)
+
    
 
 ## Resources
