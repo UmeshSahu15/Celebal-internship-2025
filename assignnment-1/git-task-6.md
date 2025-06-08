@@ -14,8 +14,8 @@ Version control is a system that records changes to files over time. Git is a di
 
 ### Configure Git (run in terminal):
 ```bash
-git config --global user.name "Kamlesh-Rankawat"
-git config --global user.email "rankawatkamlesh02022006@gmail.com"
+git config --global user.name "Umesh-sahu"
+git config --global user.email "umeshkumar637825@gmail.com"
 
 
 ```
@@ -40,7 +40,7 @@ git commit -m "Assignment-1 Complete"
 
 ### Connect to Remote Repository
 ```bash
-git remote add origin https://github.com/Kamlesh-Rankawat/CSI-2025.git
+git remote add origin (https://github.com/UmeshSahu15/CSI-internship-2025.git)
 ```
 
 ### Push Changes to Remote Repository
