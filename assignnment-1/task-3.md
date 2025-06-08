@@ -115,7 +115,8 @@ Using the terminal, practice navigating through directories, listing file conten
       
           tail filename
    
-   ![Screenshot 2025-06-08 004920](https://github.com/user-attachments/assets/81964cac-ef5b-465c-a094-64d99763fa99)
+  ![Screenshot 2025-06-08 114157](https://github.com/user-attachments/assets/fbec5a20-244d-4199-ba6e-d22d68ce628d)
+
 
 12. *Print Working Directory*
     - *pwd*: Display the current directory.
@@ -127,15 +128,15 @@ Using the terminal, practice navigating through directories, listing file conten
     - *find /path/to/search -name filename*: Search for a file by name within a directory.
     
           find /path/to/search -name filename
-    ![Screenshot 2025-06-08 004303](https://github.com/user-attachments/assets/6a5bcd64-1e60-4608-8091-fffe4244e20c)
+   ![image](https://github.com/user-attachments/assets/29262139-072d-4b23-b7d3-ad1c063776e4)
 
-    
 14. *Check Disk Usage*
     - *du -h /path/to/directory*: Display the disk usage of a directory and its contents in a human-readable format.
     
           du -h /path/to/directory
     
-    ![Screenshot 2025-06-08 004129](https://github.com/user-attachments/assets/d7a235e2-039c-4876-9895-91174f6505ed)
+   ![Screenshot 2025-06-08 114423](https://github.com/user-attachments/assets/af722e4d-4928-448d-b4b8-e5df044580f6)
+
 
 ## Resources
 - [Red Hat: Navigating the Filesystem in Linux Terminal](https://www.redhat.com/sysadmin/navigating-filesystem-linux-terminal)
