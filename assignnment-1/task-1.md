@@ -10,8 +10,9 @@ Create a file named `umesh.txt`, assign permissions (read, write, execute) to di
 touch umesh.txt
 ```
 
-![Screenshot 2025-06-07 174532](https://github.com/user-attachments/![14805](https://github.com/user-attachments/assets/a7e9b03e-c699-454b-8abb-1cbf39b35e9e)
-assets/c0cfcee1-2be2-4b23-b830-e8d573740191)
+![WhatsApp Image 2025-06-08 at 11 20 16_92d2043c](https://github.com/user-attachments/assets/dfa7ea6a-cf0b-48fa-904c-c4af543d73be)
+
+
 
 
 ### 2. Assign Permissions
@@ -29,7 +30,7 @@ Apply these permissions using:
 ```bash
 chmod 754 umesh.txt
 ```
-![Screenshot 2025-06-07 181252](https://github.com/user-attachments/assets/b915f1a0-c464-4c0e-b76d-cebaca1dfefe)
+![WhatsApp Image 2025-06-08 at 11 20 16_f4f5e257](https://github.com/user-attachments/assets/bd8e6519-f847-420f-a499-c247b569f289)
 
 
 ### 3. Verify Permissions
@@ -44,7 +45,7 @@ Expected output example:
 ```
 -rwxr-xr-- 1 umesh umesh 0 Jun 7 17:40 umesh.txt
 ```
-![Screenshot 2025-06-07 181308](https://github.com/user-attachments/assets/00f960af-2d92-4546-bed2-f19107085da1)
+![WhatsApp Image 2025-06-08 at 11 20 17_aefdcecb](https://github.com/user-attachments/assets/346db8e9-e30e-4ecc-9aa1-1f26084f55b0)
 
 ### Breakdown of Permission String
 
