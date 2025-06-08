@@ -10,7 +10,8 @@ Create a file named `umesh.txt`, assign permissions (read, write, execute) to di
 touch umesh.txt
 ```
 
-![Screenshot 2025-06-07 174532](https://github.com/user-attachments/assets/c0cfcee1-2be2-4b23-b830-e8d573740191)
+![Screenshot 2025-06-07 174532](https://github.com/user-attachments/![14805](https://github.com/user-attachments/assets/a7e9b03e-c699-454b-8abb-1cbf39b35e9e)
+assets/c0cfcee1-2be2-4b23-b830-e8d573740191)
 
 
 ### 2. Assign Permissions
