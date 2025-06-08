@@ -40,7 +40,7 @@ git commit -m "Assignment-1 Complete"
 
 ### Connect to Remote Repository
 ```bash
-git remote add origin (https://github.com/UmeshSahu15/CSI-internship-2025.git)
+git remote add origin [https://github.com/UmeshSahu15/CSI-internship-2025.git]
 ```
 
 ### Push Changes to Remote Repository
@@ -57,7 +57,7 @@ git pull origin main
 
 ## ✅ Assignment Submission Workflow
 
-1. *Clone Repository* (if applicable):https://github.com/Kamlesh-Rankawat/CSI-2025.git
+1. *Clone Repository* (if applicable):[https://github.com/UmeshSahu15/CSI-internship-2025.git]
    
        git clone 
    
