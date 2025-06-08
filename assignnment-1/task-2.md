@@ -10,26 +10,27 @@ Execute basic Linux commands to manipulate files and directories, with an emphas
     
           ls
     
-  ![Screenshot 2025-06-07 192103](https://github.com/user-attachments/assets/a9fef6c2-07f3-479e-89ec-18739e31a17d)
+ ![WhatsApp Image 2025-06-08 at 11 20 18_dd690348](https://github.com/user-attachments/assets/cdf9dab2-7ff4-4f5b-85a6-003fa73d6e35)
 
   - *ls -l*: List files and directories with detailed information.
     
           ls -l
     
-   ![Screenshot 2025-06-07 192131](https://github.com/user-attachments/assets/f2b1f531-8b36-43e7-a3d1-99ccbb802230)
+  ![WhatsApp Image 2025-06-08 at 11 20 17_3367430e](https://github.com/user-attachments/assets/fb33e34c-0ec4-44f2-ba1e-453a0436f347)
+
 
   - *ls -a*: List all files, including hidden files (those starting with a dot).
     
           ls -a
     
-    ![Screenshot 2025-06-07 192156](https://github.com/user-attachments/assets/fee73f17-ae18-40bc-a9bf-b48095c3caac)
+    ![WhatsApp Image 2025-06-08 at 11 20 17_5d2eec9b](https://github.com/user-attachments/assets/7c61fd79-eb1b-4757-b947-a6d5034a7fa9)
+
 
     - *ls -la*: Combine detailed and hidden file listing.
     
           ls -la
     
-   ![Screenshot 2025-06-07 192322](https://github.com/user-attachments/assets/44ed8d2d-f8a4-4ed1-b52f-e6903c47e187)
-
+  ![WhatsApp Image 2025-06-08 at 11 20 18_75fbb796](https://github.com/user-attachments/assets/4bbf54a6-381d-424d-a07a-3596e7de3e47)
 
 2. *Change Directory*
     - *cd directory_name*: Change to the specified directory.
