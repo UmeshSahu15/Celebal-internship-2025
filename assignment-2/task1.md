@@ -15,7 +15,7 @@ In this task, I deployed both a **Red Hat Linux** and a **Windows Server** virtu
 
 I logged in to the Azure portal and navigated to **Virtual Machines**.
 
-![Azure-Vm-Portal](./snapshots/az-vm-portal.jpg)
+![IMG-20250614-WA0012](https://github.com/user-attachments/assets/b1fc0710-e98a-44e8-93bb-f64c6fbc44e1)
 
 ### Step 2: Create Resource Group
 
