@@ -14,7 +14,7 @@ The goal of this task was to understand how to use **Azure Container Registry (A
 
 - From the Azure Portal, I searched for **Container Registries** and opened the service.
 
-![container-registry](./snapshots/task3-registry-portal.jpg)
+![Screenshot 2025-06-14 230225](https://github.com/user-attachments/assets/8138c098-fc71-4500-b8ec-cb861b4b3224)
 
 ### ✅ Step 2: Create a New Azure Container Registry (ACR)
 
@@ -25,11 +25,12 @@ The goal of this task was to understand how to use **Azure Container Registry (A
   - **Location:** Central India
   - **SKU:** Basic (sufficient for this use case)
 
-![container-registry](./snapshots/task3-registry.jpg)
+![Screenshot 2025-06-14 230301](https://github.com/user-attachments/assets/4e0befa0-1e33-4349-a440-043421cc5c18)
+
 
 - After validating the details, I clicked **Review + Create**, then **Create**.
 
-![container-registry](./snapshots/task3-registry-review.jpg)
+![Screenshot 2025-06-14 230323](https://github.com/user-attachments/assets/823bef8a-b14f-46a0-93ca-f688bea8e2d2)
 
 ### ✅ Step 3: Log in to Azure & ACR
 
@@ -38,7 +39,7 @@ The goal of this task was to understand how to use **Azure Container Registry (A
 ```bash
 az login
 ```
-![container-registry](./snapshots/task3-azlogin.jpg)
+![Screenshot 2025-06-14 230343](https://github.com/user-attachments/assets/c622aea3-903b-4660-9dff-aa7c943c0f16)
 
 - Then, authenticated with my Container Registry:
 
@@ -54,12 +55,14 @@ az acr login --name csitask3acr
 podman tag csitask3image csitask3acr.azurecr.io/csitask3image:v1
 podman push csitask3acr.azurecr.io/csitask3image:v1
 ```
-![acr-image-push](./snapshots/task3-push-cli.jpg)
+![Screenshot 2025-06-14 230401](https://github.com/user-attachments/assets/793f97ff-fd2f-47ae-ac7c-55f0950ab630)
+
 
 ### Step 5: Verify Image in ACR
 - After the push was successful, I verified the image inside the Azure Portal under the Repositories section of my registry.
 
-![acr-image](./snapshots/task3-acr-image.jpg)
+![Screenshot 2025-06-14 230422](https://github.com/user-attachments/assets/a1fd2fcd-bb57-44c8-9ea8-a0bd49b76fcf)
+
 
 ## Deploy Container from ACR Using Azure Container Instances
 
@@ -71,22 +74,25 @@ podman push csitask3acr.azurecr.io/csitask3image:v1
   - **Image:** csitask3acr.azurecr.io/csitask3image:v1
   - **Port:** 3000 (used by my Node.js app)
 
-![container-instance](./snapshots/task3-csi-portal-container.jpg)
+![Screenshot 2025-06-14 230446](https://github.com/user-attachments/assets/56abc516-ff1d-44b3-9e3f-1b1b904b9755)
+
 
 ### Step 7: Review & Deploy
 - Reviewed the configuration and clicked Create.
 
-![container-review](./snapshots/task3-container-review.jpg)
+![Screenshot 2025-06-14 230508](https://github.com/user-attachments/assets/0bdd4b28-027e-4715-b623-dfdcdc848d08)
+
 
 ### Step 8: Container Deployed Successfully
 - Once the deployment was complete, I navigated to the instance to confirm the status.
 
-![container-deployed](./snapshots/task3-csi-container.jpg)
+![Screenshot 2025-06-14 230653](https://github.com/user-attachments/assets/6ca8e121-f3f1-4bd6-877f-5eb0b8f49bd9)
 
 ### Step 9: Verify Web Application
 - Finally, I copied the container’s public IP address, opened it in a browser, and confirmed that my Node.js app (serving a static HTML page) was running successfully.
 
-![web-view](./snapshots/task3-container-view.jpg)
+![Screenshot 2025-06-14 231024](https://github.com/user-attachments/assets/cac40f77-29e5-4ffc-9766-0f4e9778510a)
+
 
 ---
 
