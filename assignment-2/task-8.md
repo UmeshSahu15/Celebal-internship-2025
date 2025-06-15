@@ -14,7 +14,8 @@ In this task, I implemented a private DNS infrastructure in Azure using a Linux 
 
 I provisioned a Linux-based VM using. This machine was used to install and run both the Apache web server and BIND9 DNS server.
 
-![Virtual Machine](./snapshots/dns-vm.jpg)
+![Screenshot 2025-06-15 141415](https://github.com/user-attachments/assets/6f43c898-8fe4-4599-b57d-241c319984e9)
+
 
 ### Step 2: Installed and Configured Apache Web Server
 
@@ -30,7 +31,7 @@ I then created a simple `index.html` page to serve as the homepage.
 
 Apache was up and running on port 80, successfully serving web content.
 
-![Apache Installed](./snapshots/vm-webserver.jpg)
+![Screenshot 2025-06-15 141427](https://github.com/user-attachments/assets/37b5e0ab-c8fe-47b7-8aa4-6a0c75041197)
 
 
 ### Step 3: Installed and Configured BIND9 DNS Server
@@ -41,7 +42,8 @@ To simulate an internal DNS server, I installed **BIND9**:
 sudo apt install bind9 bind9utils -y
 ```
 
-![BIND Installed](./snapshots/vm-bind9.jpg)
+![Screenshot 2025-06-15 141440](https://github.com/user-attachments/assets/ac5e6384-42a0-4924-b3bd-da7d37de1ac7)
+
 
 I created a directory to store DNS zone files:
 
@@ -59,7 +61,8 @@ sudo nano /etc/bind/zones/internal.local.db
 
 Inside the zone file, I defined the A record pointing the domain `csidevopsweb.internal.local` to the VM’s private IP.
 
-![Zone File](./snapshots/bind-file.jpg)
+![Screenshot 2025-06-15 141454](https://github.com/user-attachments/assets/0b3ac6b0-7a2e-443c-ab59-c8ffbcd4d8e7)
+
 
 ### Step 5: Linked the Zone in BIND Configuration
 
@@ -71,7 +74,8 @@ sudo nano /etc/bind/named.conf.local
 
 I added a zone declaration that points to the zone file created above.
 
-![Zone Linked](./snapshots/bind-named.jpg)
+![Screenshot 2025-06-15 141506](https://github.com/user-attachments/assets/0b9a4515-ed5b-45d6-a4ea-4173069af7a4)
+
 
 ### Step 6: Verified Zone Syntax and Restarted BIND9
 
@@ -112,13 +116,14 @@ curl http://csidevopsweb.internal.local
 
 ✅ Response: `Hello This is Vikas From CSI DevOps Configured Custom Domain`
 
-![Curl Output](./snapshots/dns-resolution.jpg)
+![Screenshot 2025-06-15 141517](https://github.com/user-attachments/assets/16a8a93f-6db0-4b39-95a8-261fd7b45984)
+
 
 ### Step 3: Verified from Another VM in Same VNet
 
 To test cross-VM DNS resolution, I deployed a second VM in the same VNet (Windows).
 
-![windows-vm](./snapshots/windows-dns-vm.jpg)
+![Screenshot 2025-06-15 141537](https://github.com/user-attachments/assets/b7a6a3a8-b6d7-43c6-9bc8-c82173577121)
 
 I ran:
 
@@ -128,7 +133,7 @@ nslookup csidevopsweb.internal.local <DNS_VM_PRIVATE_IP>
 
 ✅ It resolved the domain successfully and loaded the web page.
 
-![Windows VM Test](./snapshots/verified-domain.jpg)
+![WhatsApp Image 2025-06-15 at 15 16 48_ca3ae133](https://github.com/user-attachments/assets/f5404b59-dab2-4daa-a334-20b4b0ee16f2)
 
 ---
 
