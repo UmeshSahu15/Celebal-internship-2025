@@ -1,89 +1,114 @@
-# Azure Application Gateway Guide ⛩️
+# 🌐 Week 2 – Azure Compute: Task 7
 
-## Table of Contents 📋
-1. [Introduction to Azure Application Gateway](#introduction-to-azure-application-gateway)
-2. [Create an Application Gateway](#create-an-application-gateway)
-3. [Configure Backend Pools](#configure-backend-pools)
-4. [Configure Listeners and Rules](#configure-listeners-and-rules)
-5. [Deploy Virtual Machines](#deploy-virtual-machines)
-6. [Test the Application Gateway](#test-the-application-gateway)
-7. [Additional Resources](#additional-resources)
+## 📌 Task: Create and Test Azure Application Gateway
 
-## Introduction to Azure Application Gateway 🎋
+---
 
-Azure Application Gateway is a web traffic load balancer that enables you to manage traffic to your web applications. Application Gateway provides Layer 7 load balancing and is used to manage HTTP and HTTPS traffic.
+## 🎯 Objective
 
-## Create an Application Gateway 🏯
+The goal of this task is to understand and implement **Azure Application Gateway** to manage HTTP(S) traffic with load balancing, intelligent routing, and secure delivery to backend servers.
 
-### Step 1: Create a Virtual Network and Subnets
-1. **Navigate to the Azure Portal**:
-   - Go to [portal.azure.com](https://portal.azure.com/) and sign in with your Azure account.
+> In this task, I deployed and configured an **Azure Application Gateway** using **previously created infrastructure** (from the Load Balancer task), including VMs, Virtual Network, and Subnets. I configured routing, backend pools, and health probes and finally tested the setup by accessing a custom web page hosted on backend VMs through the Application Gateway.
 
-2. **Create a Virtual Network**:
-   - Click "Create a resource" in the left-hand menu.
-   - Search for "Virtual Network" and select it.
-   - Click "Create".
-   - Configure the virtual network:
-     - Name: `AppGatewayVNet`
-     - Address space: `10.0.0.0/16`
-     - Subnets: 
-       - `AppGatewaySubnet` with address range `10.0.1.0/24`
-       - `BackendSubnet` with address range `10.0.2.0/24`
-   - Click "Review + create" and then "Create".
+## 🔧 Step-by-Step Guide
 
-### Step 2: Create the Application Gateway
-1. **Create an Application Gateway**:
-   - Navigate to "Create a resource" > "Networking" > "Application Gateway".
-   - Configure the application gateway:
-     - Name: `MyAppGateway`
-     - Region: Choose your preferred region.
-     - Tier: Standard V2
-     - Virtual Network: `AppGatewayVNet`
-     - Subnet: Select `AppGatewaySubnet`
-     - Configuration: Leave default settings for now.
-   - Click "Review + create" and then "Create".
+### Step 1: Used Existing Resources
 
-## Configure Backend Pools ↩️
+I reused the following resources created during the Load Balancer task:
 
-### Step 1: Create Backend Pool
-1. **Add Backend Pool**:
-   - Navigate to your newly created application gateway.
-   - Select "Backend pools" and click "Add".
-   - Name: `MyBackendPool`
-   - Add backend targets (Virtual Machines, VM scale sets, or IP addresses).
+- **Virtual Network**: Includes two subnets:
+  - `app-gtw-subnet`: dedicated for Application Gateway
+  - `private-subnet`: contains backend web servers (VMs)
+- **Web Servers (VMs)**: 2 Linux VMs already deployed in `private-subnet` with Apache Web Server installed
+- **Public IP**: Used the same static public IP created earlier for external access
 
-## Configure Listeners and Rules 🧾
+> **Note**: Application Gateway requires a dedicated subnet — it cannot share a subnet with backend VMs or other resources. So i created dedicated subnet only for application gateway
 
-### Step 1: Configure Listeners
-1. **Add a Listener**:
-   - Select "Listeners" and click "Add listener".
-   - Name: `MyListener`
-   - Frontend IP: Public or Private as per your requirement.
-   - Port: 80 (HTTP) or 443 (HTTPS)
-   - Click "OK".
+### Step 2: Web Server Configuration (Pre-existing Setup)
 
-### Step 2: Configure Rules
-1. **Add a Rule**:
-   - Select "Rules" and click "Add rule".
-   - Name: `MyRule`
-   - Listener: Select `MyListener`
-   - Backend target: Select `MyBackendPool`
-   - Click "OK".
+On both Linux VMs (in `private-subnet`), Apache was already installed with unique welcome messages on their `index.html` to help confirm load balancing:
 
-## Deploy Virtual Machines 🖥️
-
-### Step 1: Create Virtual Machines
-1. **Deploy Two or More VMs**:
-   - Create at least two VMs in the `BackendSubnet`. Ensure these VMs are configured to serve web traffic (e.g., running a web server like Apache or IIS).
-
-### Step 2: Install and Configure Web Server
-1. **Install Web Server**:
-   - SSH or RDP into each VM.
-   - Install a web server (Apache for Linux, IIS for Windows).
-   - Configure the web server to serve a simple webpage.
-
-Example for Ubuntu:
 ```bash
-sudo apt update
-sudo apt install apache2 -y
-echo "Welcome to VM1" | sudo tee /var/www/html/index.html
+sudo yum install httpd -y
+sudo systemctl start httpd
+sudo systemctl enable httpd
+```
+
+- Each VM served a different HTML message to identify which server responded during testing.
+
+---
+
+### ✅ Step 3: Create Application Gateway
+
+Navigated to **Application Gateways** in Azure Portal and clicked **Create**:
+
+- **Name:** `task7-app-gtw`
+- **Region:** Central India
+- **Tier:** Standard V2 (for better features and autoscaling)
+- **VNet/Subnet:** Selected `app-gtw-subnet` under existing VNet
+
+![application-loadbalancer](./snapshots/task7-gtw.jpg)
+
+### ✅ Step 4: Configure Frontend and Backend
+
+- **Frontend Configuration:**
+  - elected the **existing public IP** for incoming traffic
+
+![frontend-ip](./snapshots/task7-frontendip.jpg)
+
+- **Backend Pool:**
+  - Configured with the **private IP addresses** of both VMs to distribute traffic via the Application Load Balancer.
+
+![app-gtw-pool](./snapshots/task7-backend-pool.jpg)
+
+- **Health Probe:**
+
+  - Configured a custom HTTP probe to `/` on port `80`
+
+- **Backend HTTP Setting:**
+
+  - Port: 80
+  - Protocol: HTTP
+  - Enabled **cookie-based affinity** (optional)
+
+- **Routing Rule:**
+  - Listener: HTTP on port 80
+  - Backend target: backend pool
+
+![configuration-app-gtw](./snapshots/task7-app-gtw-config.jpg)
+
+### ✅ Step 5: Review and Create
+
+- Clicked on **Review + Create**
+- Waited for the deployment to complete (~10 minutes)
+
+![app-gtw-review](./snapshots/task7-gtw-review.jpg)
+
+### Step 6: Deployed Application Loadbalancer
+
+- Successfully deployed the Application Gateway.
+- The Application Gateway is now accessible via the public IP address.
+
+![app-gtw](./snapshots/task7-app-gtw-deploy.jpg)
+
+### ✅ Step 7: Test Application Gateway
+
+- Copied the **public IP** of the Application Gateway
+- Pasted in browser → Successfully saw the custom page
+- Refreshed several times → Confirmed **load balancing** by seeing different VM messages
+
+[Watch Application Gateway Testing](https://drive.google.com/file/d/1PYxqpVhif9LNPTK9FW3TBC0ZO7wrR5im/view?usp=sharing)
+
+<video width="640" height="360" controls>
+  <source src="https://drive.google.com/file/d/1PYxqpVhif9LNPTK9FW3TBC0ZO7wrR5im/view?usp=sharing" type="video/mp4">
+</video>
+
+> Application Gateway and Load Balancers can work together to handle traffic better by combining basic load distribution with smarter routing and security features.
+
+---
+
+## Conclusion
+
+In this task, I successfully created and configured an Azure Application Gateway from scratch. I set up the frontend, backend pools, health probes, and routing rules, and tested the setup by accessing the application through the gateway. The load balancing worked as expected, distributing traffic across the backend VMs. This hands-on experience helped me gain practical knowledge of Azure’s application-level load balancing and traffic management.
+
+---
