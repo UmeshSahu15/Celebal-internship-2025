@@ -47,19 +47,22 @@ Navigated to **Application Gateways** in Azure Portal and clicked **Create**:
 - **Tier:** Standard V2 (for better features and autoscaling)
 - **VNet/Subnet:** Selected `app-gtw-subnet` under existing VNet
 
-![application-loadbalancer](./snapshots/task7-gtw.jpg)
+![Screenshot 2025-06-15 141155](https://github.com/user-attachments/assets/22f77b87-b761-4e43-a6c0-4c1fab075d00)
+
 
 ### ✅ Step 4: Configure Frontend and Backend
 
 - **Frontend Configuration:**
   - elected the **existing public IP** for incoming traffic
 
-![frontend-ip](./snapshots/task7-frontendip.jpg)
+![Screenshot 2025-06-15 141210](https://github.com/user-attachments/assets/eb1dc33a-7276-4f8d-b8fe-0d50a3eefbb4)
+
 
 - **Backend Pool:**
   - Configured with the **private IP addresses** of both VMs to distribute traffic via the Application Load Balancer.
 
-![app-gtw-pool](./snapshots/task7-backend-pool.jpg)
+![Screenshot 2025-06-15 141226](https://github.com/user-attachments/assets/d13c109a-315d-4625-b813-9d12a875d5d4)
+
 
 - **Health Probe:**
 
@@ -75,14 +78,15 @@ Navigated to **Application Gateways** in Azure Portal and clicked **Create**:
   - Listener: HTTP on port 80
   - Backend target: backend pool
 
-![configuration-app-gtw](./snapshots/task7-app-gtw-config.jpg)
+![Screenshot 2025-06-15 141236](https://github.com/user-attachments/assets/17951258-8f5b-42ca-8362-6e8e14728a10)
 
 ### ✅ Step 5: Review and Create
 
 - Clicked on **Review + Create**
 - Waited for the deployment to complete (~10 minutes)
 
-![app-gtw-review](./snapshots/task7-gtw-review.jpg)
+![Screenshot 2025-06-15 141247](https://github.com/user-attachments/assets/93f7bc88-5f45-4f32-b30c-af20bbe0cc21)
+
 
 ### Step 6: Deployed Application Loadbalancer
 
@@ -97,7 +101,7 @@ Navigated to **Application Gateways** in Azure Portal and clicked **Create**:
 - Pasted in browser → Successfully saw the custom page
 - Refreshed several times → Confirmed **load balancing** by seeing different VM messages
 
-[Watch Application Gateway Testing](https://drive.google.com/file/d/1PYxqpVhif9LNPTK9FW3TBC0ZO7wrR5im/view?usp=sharing)
+![Screenshot 2025-06-15 141300](https://github.com/user-attachments/assets/7474d945-51e1-489b-959c-5cbd9957abac)
 
 <video width="640" height="360" controls>
   <source src="https://drive.google.com/file/d/1PYxqpVhif9LNPTK9FW3TBC0ZO7wrR5im/view?usp=sharing" type="video/mp4">
