@@ -1,123 +1,192 @@
-# Azure Storage Account Guide
+# 🌐 Week 2 – Azure Storage: Task 9
 
-## Table of Contents
+## 📆 Task: Explore Azure Storage Account Capabilities
 
-1. [Create a Storage Account](#create-a-storage-account)
-2. [Explore Options](#explore-options)
-3. [Upload and Access Blob](#upload-and-access-blob)
-4. [Authentication Techniques](#authentication-techniques)
-5. [Azure Storage Explorer](#azure-storage-explorer)
-6. [Provision Access Keys](#provision-access-keys)
-7. [Shared Access Signature](#shared-access-signature)
-8. [Stored Access Policy](#stored-access-policy)
-9. [Access Tiers](#access-tiers)
-10. [Lifecycle Policy](#lifecycle-policy)
-11. [Object Replication](#object-replication)
-12. [File Share Functionality](#file-share-functionality)
-13. [Azure File Sync](#azure-file-sync)
+In this task, I explored Azure Storage Account features such as blobs, file shares, access controls, tiers, lifecycle policies, replication, and Azure File Sync. Here's what I did step-by-step, with real hands-on execution.
 
-## Create a Storage Account
+---
 
-1. Go to the Azure portal.
-2. Click on `Create a resource` and select `Storage account`.
-3. Fill in the necessary details such as subscription, resource group, and storage account name.
-4. Choose the performance and replication options.
-5. Click `Review + create` and then `Create`.
+## Step 1: Created a Storage Account
 
-## Explore Options
+I Navigated to the Azure portal and started the process of creating a new Storage Account. I named it `csidevopsstorage` and selected `East-US` as the region to keep it local.
 
-1. **Performance**: Standard vs. Premium.
-2. **Replication**: LRS, ZRS, GRS, RA-GRS.
-3. **Access tier**: Hot, Cool, Archive.
-4. **Networking**: Public endpoint, Private endpoint.
-5. **Data protection**: Soft delete, versioning.
-6. **Encryption**: Microsoft-managed keys vs. Customer-managed keys.
+![storage-account-portal](./snapshots/task9-storage-basic.jpg)
 
-## Upload and Access Blob
+- I chosen the Standard performance tier for cost efficiency.
 
-```python
-# Install Azure storage blob library
-pip install azure-storage-blob
+- For redundancy, I picked Read-access geo-redundant storage (RA-GRS) to make sure my data is highly available, even in case of regional outages.
 
-from azure.storage.blob import BlobServiceClient, BlobClient, ContainerClient
+- I left the default Access Tier as Hot since I wanted frequent access during testing.
 
-# Connection string
-connection_string = "your_connection_string"
+Once created, the account was ready to host different types of data.
 
-# Create blob service client
-blob_service_client = BlobServiceClient.from_connection_string(connection_string)
+![storage-account](./snapshots/storage-account-created.jpg)
 
-# Create a container
-container_name = "mycontainer"
-container_client = blob_service_client.create_container(container_name)
+## Step 2: Created a Blob Container and Uploading Data
 
-# Upload a blob
-blob_name = "myblob"
-blob_client = container_client.get_blob_client(blob_name)
-with open("sample.txt", "rb") as data:
-    blob_client.upload_blob(data)
+Next, I went to the storage account and navigated to Containers. I created a container named `csi-devops-blob` and set its access level to Private for now to keep data secure.
 
-# Download the blob
-with open("downloaded_sample.txt", "wb") as my_blob:
-    download_stream = blob_client.download_blob()
-    my_blob.write(download_stream.readall())
-```
+![blob-container](./snapshots/task9-blob-container.jpg)
 
-## Authentication Techniques
-### 1. Shared Key Authorization:
-   - Use the access keys from the storage account.
-### 2. Shared Access Signature (SAS):
-   - Create and use SAS tokens for granular access control.
-### 3. Azure Active Directory (AAD):
-   - Integrate with AAD for identity-based access.
+Then, I uploaded a test file called `week2.txt, vikas-resume.docx` into the container.
 
-## Azure Storage Explorer
-1. Download and install [Azure Storage Explorer](https://azure.microsoft.com/en-us/products/storage/storage-explorer/).
-2. Sign in to your Azure account.
-3. Access your storage account and perform operations like upload, download, delete, etc.
+- The file uploaded successfully, and I could see it listed under blobs.
 
-## Provision Access Keys
-1. Go to your storage account in the Azure portal.
-2. Navigate to `Access keys`.
-3. Copy the Key1 or Key2 and use it in your connection string.
+![blob-view](./snapshots/task9-blob-view.jpg)
 
-## Shared Access Signature
-1. Go to your storage account in the Azure portal.
-2. Navigate to `Shared access signature`.
-3. Generate a SAS token with required permissions and expiry time.
-4. Use the SAS token to access resources.
+- I also checked blob properties and used the URL to confirm that access is restricted due to private mode.
 
-## Stored Access Policy
-1. Go to your container in the Azure portal.
-2. Navigate to `Access policy`.
-3. Create a policy with required permissions and expiry.
-4. Associate the policy with your SAS token.
+![blob-properties](./snapshots/task9-blob-properites.jpg)
 
-## Access Tiers
-1. **Hot**: Frequently accessed data.
-2. **Cool**: Infrequently accessed data with lower storage costs.
-3. **Archive**: Rarely accessed data with the lowest storage cost.
+![access-view](./snapshots/task9-webview.jpg)
 
-## Lifecycle Policy
-1. Go to your storage account in the Azure portal.
-2. Navigate to `Lifecycle Management`.
-3. Create a rule to move blobs between access tiers or delete them based on conditions.
+## Step 3: Explored Authentication Techniques
 
-## Object Replication
-1. Go to your storage account in the Azure portal.
-2. Navigate to `Object replication`.
-3. Configure replication rules between source and destination accounts.
+To understand how access control works in Azure Storage, I tested multiple authentication methods.
 
-## File Share Functionality
-1. Go to your storage account in the Azure portal.
-2. Navigate to `File shares`.
-3. Create a new file share and upload files.
+### A. Using Access Keys & Viewed by Storage explorer
 
-## Azure File Sync
-1 .Set up an Azure File Sync service in the Azure portal.<br>
-2. Register your on-premises server with the sync service.<br>
-3. Create a sync group and add the file share and server endpoint.<br>
+- I picked one of the two Access Keys available under the Access Keys tab.
 
+![access-keys](./snapshots/task9-storage-access-keys.jpg)
 
-<br>
--> This Markdown file provides a structured guide for working with Azure Storage accounts, covering creation, configuration options, blob operations, authentication techniques, tools like Azure Storage Explorer, access keys, shared access signatures, access policies, access tiers, lifecycle policies, object replication, file share functionality, and Azure File Sync. Adjust the placeholders (`your_connection_string`, etc.) with your actual values when implementing these steps.
+- Then, I connected my storage account to Azure Storage Explorer using the key.
+
+![storage-explorer](./snapshots/task9-storage-explorer.jpg)
+
+- Through this, I was able to upload and download blobs without issues.
+
+![access-keys](./snapshots/task9-storage-exploer-upload.jpg)
+
+### B. Using Shared Access Signature (SAS, Storage Account Level)
+
+- I generated a SAS token with Read and Write permissions, a limited IP range, and a short expiration time.
+
+![storage-SAS](./snapshots/storage+SAS.jpg)
+
+- I tested the generated URL in the storage explorer, and it worked—only within the defined scope.
+
+![storage-explorer-connection](./snapshots/task9-storage-explorer.jpg)
+
+![storage-explorer-view](./snapshots/storageexplorer+sas.jpg)
+
+### C. Stored Access Policy + SAS (Container + Blob Level)
+
+- I created a Stored Access Policy at the container level.
+
+![access-policy](./snapshots/created-access-policy.jpg)
+
+- Then, I generated a SAS token tied to that policy to access a specific blob if require we can generate SAS token for container level as well.
+
+![blob-sas-token](./snapshots/sas+access.jpg)
+
+- This gave me more centralized control over the access scope and expiration.
+- Now i can able to view the blob in browser
+
+![blob-view](./snapshots/blob-view.jpg)
+
+## Step 4: Access Tiers
+
+- Switched between **Hot**, **Cool**, **Cold** and **Archive** tiers for uploaded blob
+- Observed:
+
+  - **Hot**: Fast access, higher cost, Ideal for frequently accessed data.
+  - **Cool**: For infrequently accessed data but still needed online, cheaper.
+
+  ![cool-tier](./snapshots/cool-tier.jpg)
+
+  ![cool-tier-view](./snapshots/cool-tier-view.jpg)
+
+  - **Cold**: For data that is rarely accessed, cheaper than Hot and Cool, but slower
+
+  ![cold-tier](./snapshots/cold-tier.jpg)
+
+  - **Archive**: Meant for long-term backup and is offline by default.
+
+  ![archive-tier](./snapshots/archive-tier.jpg)
+
+  - After moving to Archive, I tested rehydration to bring the blob back online, which took some time.
+
+> Rehydration -> The process of transitioning an archived blob back to an online tier (Hot or Cool) so it becomes accessible again.
+
+## Step 5: Lifecycle Management Policies
+
+To automate data transitions and cleanup, I created a lifecycle management policy, So I configured a rule targeting **base blobs** (i.e., current active blobs), with the following actions:
+
+- **Move to Cold** tier after **7 days**
+- **Move to Archive** tier after **20 days**
+- **Delete** the blob after **90 days**
+
+This ensures my main blobs follow a cost-efficient storage path without managing snapshots or versions.
+
+![life-cycle](./snapshots/lifecycle-storage.jpg)
+
+## Step 6: Blob Replication
+
+I explored Object Replication to keep data in sync across regions.
+
+- Created a two storage accounts named as `objectreplica1` `objectreplica2`.
+
+![storage-accounts](./snapshots/object-replica-storage.jpg)
+
+- After that created two containers named as `replica1sourcecontaienr` `replica2destinationcontainer`.
+
+![replica1-container](./snapshots/object-replica1-container.jpg)
+
+![replica2-container](./snapshots/replica2-container.jpg)
+
+- Enabled replication by configuring the source and destination pairing.
+
+![object-replication](./snapshots/object-replication.jpg)
+
+- Uploaded a file in the `objectreplica1` of `sourcereplicacontainer`
+
+![uploaded-blob](./snapshots/uploadfile-replication.jpg)
+
+- Successfully replicated same file automatically into `objectreplica2` of `replica2destinationcontainer`
+
+![verified-replica-id](./snapshots/replication-id.jpg)
+
+![replicated-blob](./snapshots/replicated-blob.jpg)
+
+> If we want two-way replication, we have to set up another rule in the opposite direction as well.
+
+## Step 7: Azure File Share & File Sync
+
+### Created File Share
+
+- Created a file share named `devopsfileshare` in the storage account.
+
+![file-share-created](./snapshots/filesharecreated.jpg)
+
+- Uploaded `mylinkedin` Image directly through the **Azure Portal**.
+
+![file-share-uploaded](./snapshots/imagefileupload.jpg)
+
+### Connected via Azure File Sync
+
+#### Windows Server Setup
+
+- Deployed a **Windows Server VM**.
+
+![windows-vm](./snapshots/fileshare-vm.jpg)
+
+- Installed the **Azure File Sync**.
+
+![file-share-agent](./snapshots/window-fileshare.jpg)
+
+#### Sync Test
+
+- Linked a local folder on the VM to the file share.
+- Successfully tested **bi-directional sync**:
+  - ✅ Files created in the file share appeared on the server.
+
+  ![file-uploaded-vm](./snapshots/filecreatefromvm.jpg)
+
+  - ✅ Files added locally were synced back to Azure.
+
+  ![file-sync-to-azure](./snapshots/filesyncdone.jpg)
+
+## Conclusion
+
+This task gave me a complete overview of how Azure handles various types of storage needs. I tested authentication techniques, access tiers, policies, replication, and file synchronization. These are critical for managing enterprise data efficiently and securely.
