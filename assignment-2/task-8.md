@@ -1,114 +1,139 @@
-# Setting Up a Domain and DNS with Azure VM 📟
+# Week 2 – Azure Networking: Task 8
 
-## Table of Contents 📋
-1. [Introduction](#introduction)
-2. [Set Up a Domain](#set-up-a-domain)
-3. [Create a Virtual Machine](#create-a-virtual-machine)
-4. [Configure DNS for Traffic Management](#configure-dns-for-traffic-management)
-5. [Deploy a Web Server](#deploy-a-web-server)
-6. [Verify Configuration](#verify-configuration)
-7. [Additional Resources](#additional-resources)
+## Task: Set Up a Domain, Configure a Web Server, and Route Traffic Using an Internal DNS Server
 
-## Introduction 📶
+## Objective
 
-This guide provides step-by-step instructions on how to set up a domain, configure a server on an Azure VM, and use Azure DNS to manage traffic. 
+In this task, I implemented a private DNS infrastructure in Azure using a Linux VM. The goal was to host a custom domain (`internal.local`) and route traffic internally to a web server through DNS resolution. This exercise closely simulates how DNS routing works in private enterprise environments and strengthens my understanding of cloud networking and name resolution in virtual networks.
 
-## Set Up a Domain 🌍
+---
 
-### Step 1: Register a Domain
-1. **Choose a Domain Registrar**:
-   - Use a domain registrar such as GoDaddy, Namecheap, or any other preferred registrar.
-   - Search for your desired domain name and register it.
+## Step-by-Step Implementation
 
-### Step 2: Configure Domain with Azure DNS
-1. **Navigate to the Azure Portal**:
-   - Go to [portal.azure.com](https://portal.azure.com/) and sign in with your Azure account.
+### Step 1: Provisioned a Linux VM (Ubuntu)
 
-2. **Create a DNS Zone**:
-   - Click "Create a resource" in the left-hand menu.
-   - Search for "DNS Zone" and select it.
-   - Click "Create".
-   - Configure the DNS zone:
-     - Name: Enter your domain name (e.g., `example.com`).
-     - Resource Group: Select or create a resource group.
-   - Click "Review + create" and then "Create".
+I provisioned a Linux-based VM using. This machine was used to install and run both the Apache web server and BIND9 DNS server.
 
-### Step 3: Update Registrar's Name Server Records
-1. **Get Azure Name Servers**:
-   - Navigate to the DNS zone you just created.
-   - Copy the name servers listed in the "Name servers" section.
+![Virtual Machine](./snapshots/dns-vm.jpg)
 
-2. **Update Name Servers**:
-   - Go to your domain registrar’s website.
-   - Navigate to the DNS settings for your domain.
-   - Replace the existing name servers with the Azure name servers you copied.
+### Step 2: Installed and Configured Apache Web Server
 
-## Create a Virtual Machine 🖥️
+I connected to the VM via SSH and installed Apache2 as the web server:
 
-### Step 1: Create a VM in Azure
-1. **Navigate to the Azure Portal**:
-   - Click "Create a resource" in the left-hand menu.
-   - Search for "Virtual Machine" and select it.
-   - Click "Create".
+```bash
+sudo apt update
+sudo apt install apache2 -y
+systemctl status apache2 
+```
 
-2. **Configure the Virtual Machine**:
-   - Basics:
-     - Resource Group: Select your resource group.
-     - Virtual machine name: Enter a name (e.g., `webserver-vm`).
-     - Region: Choose your preferred region.
-     - Image: Choose an operating system (e.g., Ubuntu Server 20.04 LTS).
-     - Size: Choose a VM size based on your requirements.
-     - Authentication: Choose SSH public key or password for authentication.
-   - Networking:
-     - Virtual Network: Create or select an existing VNet.
-     - Subnet: Create or select an existing subnet.
-     - Public IP: Create a new public IP.
-   - Click "Review + create" and then "Create".
+I then created a simple `index.html` page to serve as the homepage.
 
-## Configure DNS for Traffic Management 🚦
+Apache was up and running on port 80, successfully serving web content.
 
-### Step 1: Create DNS Records
-1. **Navigate to Your DNS Zone**:
-   - In the Azure Portal, go to "All resources" and select your DNS zone.
+![Apache Installed](./snapshots/vm-webserver.jpg)
 
-2. **Add an A Record**:
-   - Click "+ Record set".
-   - Name: Enter a name (leave blank for root domain or enter "www" for www.example.com).
-   - Type: Select `A`.
-   - TTL: Set the TTL value (e.g., 3600 seconds).
-   - IP Address: Enter the public IP address of your VM.
-   - Click "OK".
 
-## Deploy a Web Server 🌐
+### Step 3: Installed and Configured BIND9 DNS Server
 
-### Step 1: Install a Web Server on the VM
-1. **SSH into Your VM**:
-   - Use an SSH client (like PuTTY) or the Azure Cloud Shell to connect to your VM.
+To simulate an internal DNS server, I installed **BIND9**:
 
-2. **Install a Web Server**:
-   - For Ubuntu, install Apache:
-     ```bash
-     sudo apt update
-     sudo apt install apache2 -y
-     ```
-   - For Windows, install IIS (use the built-in feature to enable IIS).
+```bash
+sudo apt install bind9 bind9utils -y
+```
 
-### Step 2: Configure the Web Server
-1. **Create a Simple Web Page**:
-   - Create an `index.html` file in the web server's root directory.
-   - Example for Apache:
-     ```bash
-     echo "Welcome to my website" | sudo tee /var/www/html/index.html
-     ```
+![BIND Installed](./snapshots/vm-bind9.jpg)
 
-## Verify Configuration ✅
+I created a directory to store DNS zone files:
 
-### Step 1: Test Domain Resolution
-1. **Access Your Website**:
-   - Open a web browser.
-   - Navigate to your domain (e.g., `http://example.com` or `http://www.example.com`).
-   - You should see the web page you configured.
+```bash
+sudo mkdir -p /etc/bind/zones
+```
 
-### Step 2: Test DNS Propagation
-1. **Check DNS Records**:
-   - Use tools like `nslookup`, `dig`, or online DNS propagation checkers to verify your DNS records are correctly set up and propagated.
+### Step 4: Created the Forward DNS Zone
+
+I created a forward zone file for the domain `internal.local`:
+
+```bash
+sudo nano /etc/bind/zones/internal.local.db
+```
+
+Inside the zone file, I defined the A record pointing the domain `csidevopsweb.internal.local` to the VM’s private IP.
+
+![Zone File](./snapshots/bind-file.jpg)
+
+### Step 5: Linked the Zone in BIND Configuration
+
+I edited the `named.conf.local` file to include the new zone:
+
+```bash
+sudo nano /etc/bind/named.conf.local
+```
+
+I added a zone declaration that points to the zone file created above.
+
+![Zone Linked](./snapshots/bind-named.jpg)
+
+### Step 6: Verified Zone Syntax and Restarted BIND9
+
+To ensure no syntax errors existed, I checked the zone file:
+
+```bash
+sudo named-checkzone internal.local /etc/bind/zones/internal.local.db
+```
+
+The output was **OK**.
+
+Then, I restarted and enabled BIND9 to persist the service:
+
+```bash
+sudo systemctl restart bind9
+sudo systemctl enable bind9
+```
+
+## Testing Domain Resolution
+
+### Step 1: Local DNS Test with nslookup
+
+I tested the DNS resolution directly on the DNS VM:
+
+```bash
+nslookup csidevopsweb.internal.local
+```
+
+It successfully returned the correct IP address.
+
+### Step 2: Accessed Web Server Using Domain Name
+
+To verify that DNS routing was working end-to-end, I used `curl` to fetch the web page using the domain name:
+
+```bash
+curl http://csidevopsweb.internal.local
+```
+
+✅ Response: `Hello This is Vikas From CSI DevOps Configured Custom Domain`
+
+![Curl Output](./snapshots/dns-resolution.jpg)
+
+### Step 3: Verified from Another VM in Same VNet
+
+To test cross-VM DNS resolution, I deployed a second VM in the same VNet (Windows).
+
+![windows-vm](./snapshots/windows-dns-vm.jpg)
+
+I ran:
+
+```bash
+nslookup csidevopsweb.internal.local <DNS_VM_PRIVATE_IP>
+```
+
+✅ It resolved the domain successfully and loaded the web page.
+
+![Windows VM Test](./snapshots/verified-domain.jpg)
+
+---
+
+## Conclusion
+
+Through this hands-on task, I successfully configured a custom internal DNS using BIND9 on an Azure VM. I was able to create a DNS zone (`internal.local`), add domain records, and verify internal routing of web traffic to another VM using domain-based addressing.
+
+---
