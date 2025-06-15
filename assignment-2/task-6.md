@@ -1,141 +1,175 @@
-# Azure Load Balancer Guide ⚖️
+# ⚖️ Week 2 – Azure Networking: Task 6
 
-## Table of Contents 📋
-1. [Introduction to Load Balancers](#introduction-to-load-balancers)
-2. [Create an External Load Balancer](#create-an-external-load-balancer)
-3. [Create an Internal Load Balancer](#create-an-internal-load-balancer)
-4. [Verify Load Balancer Functionality](#verify-load-balancer-functionality)
-5. [Additional Resources](#additional-resources)
+## 📌 Task: Create an Internal and External Load Balancer
 
-## Introduction to Load Balancers 🗄️
+## 🎯 Objective
 
-Azure Load Balancer provides high availability and network performance to your applications. It distributes incoming network traffic across multiple backend resources or servers.
+To understand how to distribute traffic efficiently within Azure using both **Internal** and **Public Load Balancers**. This setup helps in load distribution, high availability, and traffic management — key concepts every DevOps engineer must know.
 
-### Types of Load Balancers
-- **External Load Balancer**: Balances traffic coming from the internet.
-- **Internal Load Balancer**: Balances traffic within a virtual network.
+---
 
-## Create an External Load Balancer 🛠️
+## Implementation
 
-### Step 1: Create a Virtual Network and Subnets
-1. **Navigate to the Azure Portal**:
-   - Go to [portal.azure.com](https://portal.azure.com/) and sign in with your Azure account.
+### Step 0: Resource Group Setup
 
-2. **Create a Virtual Network**:
-   - Click "Create a resource" in the left-hand menu.
-   - Search for "Virtual Network" and select it.
-   - Click "Create".
-   - Configure the virtual network:
-     - Name: `ExternalVNet`
-     - Address space: `10.0.0.0/16`
-     - Subnet: `ExternalSubnet` with address range `10.0.1.0/24`
-   - Click "Review + create" and then "Create".
+- Created a dedicated **Resource Group** to logically group and manage all the related resources used for this task.
 
-### Step 2: Create Virtual Machines
-1. **Create Two or More VMs**:
-   - Create at least two VMs in the `ExternalSubnet`. Ensure these VMs are part of the same availability set or VM scale set for high availability.
+### Step 1: Set Up VNet & Backend Virtual Machines
 
-### Step 3: Create an External Load Balancer
-1. **Create a Load Balancer**:
-   - Navigate to "Create a resource" > "Networking" > "Load Balancer".
-   - Configure the load balancer:
-     - Name: `ExternalLoadBalancer`
-     - Type: Public
-     - SKU: Basic or Standard
-     - Virtual Network: `ExternalVNet`
-     - Subnet: `ExternalSubnet`
-   - Click "Review + create" and then "Create".
+To prepare for load balancing:
 
-### Step 4: Configure Backend Pool
-1. **Configure Backend Pool**:
-   - Navigate to your newly created load balancer.
-   - Select "Backend pools" and click "Add".
-   - Name: `ExternalBackendPool`
-   - Add the VMs you created earlier.
+- ✅ I deployed **two private Ubuntu VMs** in the same **VNet and subnet (`lb-subnet`)**
+*This setup allows both VMs to communicate within the same network securely.*
+- ✅ Allowed **port 80 (HTTP)** traffic through NSG
+*Opening port 80 lets the web servers receive HTTP requests.*
+- ✅ Attached a **NAT Gateway** so I could install necessary packages
+*The NAT Gateway provides outbound internet access without exposing the VMs directly to the internet.*
 
-### Step 5: Configure Health Probes
-1. **Create Health Probes**:
-   - Select "Health probes" and click "Add".
-   - Name: `ExternalHealthProbe`
-   - Protocol: HTTP
-   - Port: 80
-   - Path: `/`
-   - Click "OK".
+- Instead of assigning public IPs (which is not a best practice for security), I used **Azure Bastion**. Bastion provides secure and seamless RDP/SSH connectivity to virtual machines directly from the Azure portal over SSL, without exposing the VMs to the public internet.
 
-### Step 6: Configure Load Balancing Rules
-1. **Create Load Balancing Rule**:
-   - Select "Load balancing rules" and click "Add".
-   - Name: `ExternalLoadBalancingRule`
-   - Frontend IP address: `ExternalLoadBalancer`
-   - Backend pool: `ExternalBackendPool`
-   - Protocol: TCP
-   - Port: 80
-   - Backend port: 80
-   - Health probe: `ExternalHealthProbe`
-   - Click "OK".
+*This keeps the VMs secure by avoiding public IP exposure but still allows easy access for management.*
 
-## Create an Internal Load Balancer 🔧
+![bastion-portal](./snapshots/bastion-portal.jpg)
 
-### Step 1: Create a Virtual Network and Subnets
-1. **Navigate to the Azure Portal**:
-   - Use the same steps as above to create another virtual network.
-   - Name: `InternalVNet`
-   - Address space: `10.1.0.0/16`
-   - Subnet: `InternalSubnet` with address range `10.1.1.0/24`
+- I successfully logged into both vm's using bastion host
 
-### Step 2: Create Virtual Machines
-1. **Create Two or More VMs**:
-   - Create at least two VMs in the `InternalSubnet`.
+![ssh-bastion](./snapshots/ssh-bastion.jpg)
 
-### Step 3: Create an Internal Load Balancer
-1. **Create a Load Balancer**:
-   - Navigate to "Create a resource" > "Networking" > "Load Balancer".
-   - Configure the load balancer:
-     - Name: `InternalLoadBalancer`
-     - Type: Internal
-     - SKU: Basic or Standard
-     - Virtual Network: `InternalVNet`
-     - Subnet: `InternalSubnet`
-   - Click "Review + create" and then "Create".
+- Once connected, I installed **Apache Web Server** on both VMs as the sample application.
 
-### Step 4: Configure Backend Pool
-1. **Configure Backend Pool**:
-   - Navigate to your newly created load balancer.
-   - Select "Backend pools" and click "Add".
-   - Name: `InternalBackendPool`
-   - Add the VMs you created earlier.
+![apache-webserver1](./snapshots/webserver-vm1.jpg)
 
-### Step 5: Configure Health Probes
-1. **Create Health Probes**:
-   - Select "Health probes" and click "Add".
-   - Name: `InternalHealthProbe`
-   - Protocol: HTTP
-   - Port: 80
-   - Path: `/`
-   - Click "OK".
+![apache-webserver2](./snapshots/webserver-vm2.jpg)
 
-### Step 6: Configure Load Balancing Rules
-1. **Create Load Balancing Rule**:
-   - Select "Load balancing rules" and click "Add".
-   - Name: `InternalLoadBalancingRule`
-   - Frontend IP address: `InternalLoadBalancer`
-   - Backend pool: `InternalBackendPool`
-   - Protocol: TCP
-   - Port: 80
-   - Backend port: 80
-   - Health probe: `InternalHealthProbe`
-   - Click "OK".
+## Part A: External Load Balancer
 
-## Verify Load Balancer Functionality 👨‍💻
+### Step 2: Create Public IP
 
-### Step 1: Verify External Load Balancer
-1. **Get Public IP Address**:
-   - Navigate to the `ExternalLoadBalancer`.
-   - Copy the public IP address.
-   - Open a web browser and navigate to the public IP address. You should see the default page of one of the VMs.
+- Created a **Static Public IP** named `public-lb-ip`. This IP will be used as the frontend IP for the external load balancer. A static IP ensures the IP doesn’t change even if the load balancer is restarted.
 
-### Step 2: Verify Internal Load Balancer
-1. **Get Internal IP Address**:
-   - Navigate to the `InternalLoadBalancer`.
-   - Copy the internal IP address.
-   - From another VM within the same virtual network, open a web browser and navigate to the internal IP address. You should see the default page of one of the VMs.
+![public-lb-ip](./snapshots/task6-lb-ip.jpg)
+
+### Step 3: Create External Load Balancer
+Creating the external load balancer allows incoming internet traffic to be distributed across backend VMs.
+- Went to **Load Balancers → Create**
+- Named it: `external-lb`
+- Selected **Public** as the type
+- Assigned the previously created **static public IP**
+- Region: Central India
+- SKU: Standard
+
+![external-lb](./snapshots/task6-lb-basics.jpg)
+
+
+### Step 4: Frontend IP Configuration
+- Configured the frontend with the previously created static public IP. This is the IP users will hit from the browser to access the application.
+
+- This makes the load balancer accessible to external clients.
+
+![frontend-lb-ip](./snapshots/task6-lb-frontend.jpg)
+
+### Step 5: Backend Pool Configuration
+
+- Added both Linux VMs manually to the **backend pool**. Selected the network interface (NIC) and IP configuration for each.
+
+- The backend pool is where traffic will be distributed.
+
+![backend-pools](./snapshots/task6-lb-backend-pools.jpg)
+
+### Step 6: Load Balancing Rule
+
+- Name: `lb-rule`
+- Protocol: **TCP**
+- Port: **80**
+- Backend Port: **80**
+- Associated the backend pool and health probe
+
+### Step 5: Health Probe
+
+- Created a health probe named `lb-health-probe` to continuously check if VMs are available and healthy on port 80. If a VM fails, traffic won’t be routed to it.
+- Protocol: **TCP**
+- Port: **80**
+- Name: `lb-health-probe`
+
+![lb-rules](./snapshots/task6-lb-inbound.jpg)
+
+### Deployed Loadbalancer
+
+- Successfully Deployed External Loadbalancer.
+- The external load balancer is now ready to distribute traffic to backend VMs from the public internet.
+
+![external-lb](./snapshots/task6-lb-deployed.jpg)
+
+### Step 7: Testing External LB
+
+- After deployment, I tested the setup by hitting the public IP in the browser. Refreshed multiple times traffic successfully distributed between the two VMs.
+- Accessed using public IP from browser
+
+[Watch loadbalancer testing](https://drive.google.com/file/d/1yhI5SvU3KAiVgkEn3nDpZAyD-vCfdOmo/view?usp=sharing)
+
+## Part B: Internal Load Balancer
+
+Internal Load Balancer distributes traffic only within the virtual network, useful for backend services.
+
+### Step 1: Create Internal Load Balancer
+
+- Navigated to **Load Balancers → Create**
+- Named it: `internal-lb`
+- Type: **Internal**
+- Assigned a **Private IP address** within the subnet range (`lb-subnet`)
+- Region: Central India
+
+![internal-lb](./snapshots/task6-internal-lb.jpg)
+
+### Step 2: Frontend IP configuration
+
+Assigned a Static IP to access the webserver later
+
+![frontend-ip](./snapshots/task6-internal-frontend-ip.jpg)
+
+### Step 3: Backend Pool
+
+- Used the same VMs as backend instances
+- Ensured proper NSG rules allow internal traffic
+
+![internal-backend-pools](./snapshots/task6-internal-backend-pool.jpg)
+
+### Step 4: Internal Health Probe
+Created a probe named `internal-health-probe` that checks for TCP connectivity on port 80.
+- Protocol: **TCP**
+- Port: **80**
+- Named: `internal-health-probe`
+
+### Step 5: Load Balancing Rule (Internal)
+Configured a rule that distributes HTTP traffic (port 80) to backend pool members using the health probe.
+- Protocol: **TCP**
+- Port: **80**
+- Associated backend pool and health probe
+
+![lb-rules](./snapshots/task6-internal-inbound-rule.jpg)
+
+### Step 6: Successfully Deployed Internal Loadbalancer
+Internal Load Balancer deployed successfully, ready to route traffic securely within the virtual network using .
+
+![internal-lb](./snapshots/task6-internal-lb-deployed.jpg)
+
+
+### 🧪 Step 5: Testing Internal LB
+
+- Logged into one of the VMs
+- Used `curl` command to hit internal load balancer's private IP:
+```bash
+curl http://<10.0.0.6:80>
+```
+
+![internal-lb-test](./snapshots/task6-internal-lb-success.jpg)
+*Testing from inside the network confirms that the internal load balancer is correctly routing traffic.*
+
+> **NOTE** We can access this from other VMs within the same virtual network as well.
+---
+
+## 🧾 Conclusion
+
+This task was a great opportunity to get hands-on with Azure Load Balancers. I not only followed the core steps but also **enhanced the security aspect** by using **private instances and Bastion Host** access — even though it wasn’t explicitly required.
+
+---
