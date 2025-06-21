@@ -15,7 +15,8 @@ The goal of this task was to get practical experience using **Azure Policy** to 
 * From the Azure Portal home page, I searched and opened **Policy**.
 * This took me to the Azure Policy dashboard where I could manage policies across my subscriptions.
 
-![policy-portal](./snapshots/policy.jpg)
+![Screenshot 2025-06-22 003924](https://github.com/user-attachments/assets/4227406b-ace5-4627-8602-0e92a55bf39f)
+
 
 ### Step 2: Create a New Policy Definition to Require `csi-devops` Tag
 
@@ -53,13 +54,15 @@ Next, I created a custom policy to enforce the presence of the `csi-devops` tag.
 
 Finally I hit `Save`
 
-![policy-definition](./snapshots/policy%20definition.jpg)
+![Screenshot 2025-06-22 003954](https://github.com/user-attachments/assets/c1bed4d8-330d-4906-9cfd-c76fd9f94c2a)
+
 
 ## Step 3: Assignd a Policy
 
 * Clicked on **Authoring** > **Assignments** > **+ Assign Policy**
 
-![Assign-Policy](./snapshots/assignment-policy.jpg)
+![Screenshot 2025-06-22 004007](https://github.com/user-attachments/assets/14275b00-3b63-4bf0-8589-99974dceaec6)
+
 
 - Clicked the **+ Assign Policy** button at the top.
 - Under **Scope**, I selected my **Subscription** to apply the policy broadly.
@@ -68,7 +71,8 @@ Finally I hit `Save`
 - Since this policy doesn’t require parameters, I left those sections as default.
 - Finally, I reviewed everything carefully and clicked **Create**.
 
-![assignment](./snapshots/assignment-created.jpg)
+![Screenshot 2025-06-22 004018](https://github.com/user-attachments/assets/626d3db9-7ffd-4103-ba27-925ef26024c7)
+
 
 ## Step 4: Verifying That the Tag Policy Works (Tested with VNet)
 
@@ -88,7 +92,8 @@ I went to the Azure Portal and tried creating a new VNet:
 **Result:**  
 As expected, the deployment **failed** — Azure showed a policy error saying that the required tag `csi-devops` was missing.
 
-![vnet](./snapshots/policy-validate.jpg)
+![Screenshot 2025-06-22 004030](https://github.com/user-attachments/assets/4906b4fe-55f2-460f-8374-fe4abe716590)
+
 
 ---
 
