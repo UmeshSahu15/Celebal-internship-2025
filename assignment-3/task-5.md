@@ -21,7 +21,7 @@ The main goal of this task was to learn how to securely manage secrets using **A
 
 > 🔹 Using a separate resource group helps in organizing and securing secrets independently from other workloads.
 
-![resource-group](./snapshots/rg-ui.jpg)
+![Screenshot 2025-06-22 004132](https://github.com/user-attachments/assets/a68c74fc-8389-4819-8c6f-7ec5668ab99a)
 
 ### ✅ Step 2: Create the Azure Key Vault
 
@@ -36,7 +36,8 @@ The main goal of this task was to learn how to securely manage secrets using **A
   - **Soft delete:** Enabled by default (helps with accidental deletions)
   - **Retention policy:** I set the retention period for deleted secrets to **90 days**, which means even if a secret is deleted, it can be recovered within that time.
 
-![vault](./snapshots/keyvault-ui-basics.jpg)
+![Screenshot 2025-06-22 004147](https://github.com/user-attachments/assets/0867da62-d657-4b41-b286-ec852ece08e4)
+
 
 - Under **Access configuration**, I selected:
 
@@ -46,15 +47,18 @@ The main goal of this task was to learn how to securely manage secrets using **A
   - **Access from virtual machines (VMs)** — so VMs can securely retrieve secrets
   - **Access by ARM templates** — useful for deployments that need secrets during provisioning
 
-![key-vault](./snapshots/access-control.jpg)
+![Screenshot 2025-06-22 004200](https://github.com/user-attachments/assets/8ac6c46d-5148-47b6-8d25-486893be48a6)
+
 
 - Clicked **“Review + Create”** → **“Create”**.
 
-![key-vault](./snapshots/vault%20review.jpg)
+![Screenshot 2025-06-22 004213](https://github.com/user-attachments/assets/f088ef54-a87d-4a15-99f7-c873abdcb09d)
+
 
 - The person who creates the vault automatically gets full access. By enabling VM and ARM access, I made sure my infrastructure can securely interact with the vault without hardcoded secrets
 
-![Vault](./snapshots/vault-created.jpg)
+![Screenshot 2025-06-22 004228](https://github.com/user-attachments/assets/766ab997-db30-478b-bfb7-d7cf25227f7f)
+
 
 ### ✅ Step 3: Used Azure RBAC Instead of Access Policies (Recommended Way)
 
@@ -69,7 +73,8 @@ So, in the **Access configuration** section of the Key Vault, I selected:
 
 > **Permission model:** `Azure role-based access control (RBAC)`
 
-![RBAC](./snapshots/access-configuration.jpg)
+![Screenshot 2025-06-22 004244](https://github.com/user-attachments/assets/03fb74a7-0a52-4506-be71-f23ec1421f56)
+
 
 ### ✅ Step 4: Assigned Myself the Right Role to Manage Secrets
 
@@ -83,11 +88,13 @@ Here’s how I did it:
 - Selected the role:  
    🟢 **Key Vault Secrets Officer**
 
-![role-assignment](./snapshots/ui-role-assignement.jpg)
+![Screenshot 2025-06-22 004257](https://github.com/user-attachments/assets/6d6737aa-0651-4a40-88d5-e3b3ef86ad75)
+
 
 - Chose **User** and picked my own account from the directory
 
-![member](./snapshots/assignement-member.jpg)
+![Screenshot 2025-06-22 004312](https://github.com/user-attachments/assets/153cbbef-5698-4589-ab84-43de899ced72)
+
 
 - Clicked **Review + assign**
 
@@ -103,11 +110,13 @@ Here’s how I did it:
   - **Activation Date:** Set a date when the secret should start being usable
   - **Expiration Date:** Defined a future expiry to automatically disable the secret after a certain period.
 
-![secret](./snapshots/secret-created-ui.jpg)
+![Screenshot 2025-06-22 004327](https://github.com/user-attachments/assets/e70946ff-b671-47bc-a346-be0b6fb29887)
+
 
 - Then clicked **“Create”** to store the secret securely.
 
-![secret-ui](./snapshots/secret-created-ui2.jpg)
+![Screenshot 2025-06-22 004336](https://github.com/user-attachments/assets/45ccf428-6610-4454-973d-8c13db7ed2e2)
+
 
 > Secrets in Azure Key Vault are stored as simple key-value pairs, which makes it a secure alternative to hardcoding sensitive information like passwords or API keys in your repositories.
 
@@ -129,7 +138,7 @@ az keyvault secret show \
 
 - Above command returned the exact secret value I had stored earlier:
 
-![secret](./snapshots/retreive-secret.jpg)
+![Screenshot 2025-06-22 004350](https://github.com/user-attachments/assets/95bf02f4-2d94-4219-a441-47cbc714d66b)
 
 ## Vault Creation using `Azure CLI`
 
@@ -157,9 +166,10 @@ az keyvault create \
 
 > `--name` must be globally unique. I used a name like `csi-task5-kv`.
 
-![key-valut](./snapshots/keyvault-created.jpg)
+![Screenshot 2025-06-22 004406](https://github.com/user-attachments/assets/95d8186e-a05b-4b38-8bea-d1d559295dd4)
 
-![Key-Vault](./snapshots/keyvault-created.jpg)
+
+![Screenshot 2025-06-22 004418](https://github.com/user-attachments/assets/c5438a44-3e62-419b-b644-dbc341eafb86)
 
 ### Step 3: Assign RBAC Role to Manage Secrets
 
@@ -172,7 +182,8 @@ az role assignment create \
   --scope "/subscriptions/<subscription-id>/resourceGroups/csi-keyvault-rg/providers/Microsoft.KeyVault/vaults/csi-task5-kv"
 ```
 
-![role-assignment](./snapshots/assignment%20created.jpg)
+![Screenshot 2025-06-22 004433](https://github.com/user-attachments/assets/e1594528-c629-4960-8efb-1e2dd99df6e8)
+
 
 ### Step 4: Add a Secret to Key Vault
 
@@ -186,7 +197,7 @@ az keyvault secret set \
 - Here, I added a secret called `"DbPassword"` is the key, and the actual password is the value.
 - Secrets are stored as key-value pairs, and this becomes a central place where applications or DevOps pipelines can pull sensitive configuration from.
 
-![stored-secret](./snapshots/created-secret.jpg)
+![Screenshot 2025-06-22 004444](https://github.com/user-attachments/assets/e9bf0362-9feb-45d1-af01-f0b618cbd87b)
 
 ### Step 5: Retrieve the Secret from CLI
 
@@ -202,7 +213,8 @@ az keyvault secret show \
 
 The --query "value" part extracts only the value of the secret, and `-o tsv` ensures it's displayed in plain text without any extra formatting (like quotes or JSON wrappers).
 
-![secrets-retreived](./snapshots/secrets-retrived.jpg)
+![Screenshot 2025-06-22 004453](https://github.com/user-attachments/assets/3d422fac-5cd8-44ba-974c-d6294fb6c194)
+
 
 ---
 
