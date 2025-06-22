@@ -6,7 +6,7 @@ In this task, I set up **Azure Site Recovery (ASR)** to enable disaster recovery
 
 **Note**: In this week, there were a few repeated questions and no specific task assigned on Site Recovery. So, I took the initiative to explore Azure Site Recovery in depth to get hands on experience and better understanding about disaster recovery in Azure
 
-![repeated-question](./snapshots/repeated-questions.jpg)
+![Screenshot 2025-06-22 113256](https://github.com/user-attachments/assets/8cf9a859-5bf6-4e90-ba8e-51cb7cf3cf17)
 
 ---
 
@@ -44,13 +44,14 @@ Before proceeding, I made sure:
 - Clicked **Review + Create**, then **Create**
 - Vault creation completed successfully
 
-![create-asr-vault](./snapshots/asr-vault.jpg)
+![Screenshot 2025-06-22 113322](https://github.com/user-attachments/assets/a0526d65-8d13-46ad-998f-c06cee46f023)
 
 ### Step 3: Enable Site Recovery
 
 - Opened `csi-devops-asr-vault` → clicked **Site Recovery** → **Enable Replication**
 
-![site-recovery](./snapshots/site-recovery.jpg)
+![Screenshot 2025-06-22 113335](https://github.com/user-attachments/assets/d3e3d4e4-4fe1-4b42-a9cb-97b5152b7613)
+
 
 - Configured source settings as follows:
 
@@ -61,14 +62,16 @@ Before proceeding, I made sure:
 
 Clicked **Next** to proceed.
 
-![replication](./snapshots/replication-source.jpg)
+![Screenshot 2025-06-22 113351](https://github.com/user-attachments/assets/f08166ff-cbc6-40a9-ab90-c5e8f25e4b48)
+
 
 ### Step 4: Select the Virtual Machine
 
 - On the next screen, I selected the VM `monitoring-vm` to replicate
 - Clicked **Next** to confirm the selection
 
-![replication](./snapshots/enable-replication.jpg)
+![Screenshot 2025-06-22 113405](https://github.com/user-attachments/assets/ba1a880d-8b6c-4808-874b-4ca19de0073f)
+
 
 ### Step 5: Configure Target Settings
 
@@ -77,7 +80,7 @@ Clicked **Next** to proceed.
 - Accepted the automatic provisioning of the necessary storage account and network interfaces
 - Clicked **Next**
 
-![replica](./snapshots/replica-settings.jpg)
+![Screenshot 2025-06-22 113416](https://github.com/user-attachments/assets/089b89e4-ba1d-42a3-9a34-1e9a66887da4)
 
 ### Step 6: Adjust Replication Policy
 
@@ -90,18 +93,20 @@ Clicked **Next** to proceed.
 - Azure Site Recovery also supports using Replication Groups to group multiple VMs for coordinated replication and failover. However, for this task, I focused on replicating a single VM and did not configure a replication group.
 - Clicked **Next** to move on
 
-![replication](./snapshots/replica-manage.jpg)
+![Screenshot 2025-06-22 113426](https://github.com/user-attachments/assets/583efeb8-e6e6-4408-8b9c-3365bcd70120)
+
 
 ### Step 7: Enable Replication
 
 - Reviewed all configurations
 
-![replication](./snapshots/review.jpg)
+![Screenshot 2025-06-22 113436](https://github.com/user-attachments/assets/5e653d75-94d1-4029-ba3b-71ecd145815a)
 
 - Clicked **Enable Replication**
 - Azure automatically installed the ASR Mobility agent on the VM, set up resources, and triggered the initial replication
 
-![enable-replication](./snapshots/replication-success.jpg)
+![Screenshot 2025-06-22 113446](https://github.com/user-attachments/assets/92f3382c-f6eb-4a3d-b0f1-caf233284d05)
+
 
 ## Step 8: Confirm VM Is Replicating
 
@@ -109,11 +114,13 @@ Clicked **Next** to proceed.
 - The VM `monitoring-vm` appeared with a **Healthy** status.
 - This confirms that the VM is actively replicating to the target region
 
-![replication-health](./snapshots/replicated-items.jpg)
+![Screenshot 2025-06-22 113457](https://github.com/user-attachments/assets/69885b75-2c5b-42df-8cd8-96691bece995)
+
 
 - Infrastructure view
 
-![asr-infra-view](./snapshots/infra-view.jpg)
+![Screenshot 2025-06-22 113508](https://github.com/user-attachments/assets/16774a00-af6c-4651-b326-5164ae50d2d9)
+
 
 ---
 
@@ -139,7 +146,8 @@ Most importantly, this test is isolated — it **does not impact the source VM**
 
 - Clicked on **Test Failover** at the top
 
-![test-failover](./snapshots/replicated-vm.jpg)
+![Screenshot 2025-06-22 113523](https://github.com/user-attachments/assets/38bf713b-2e28-450e-ad1e-e86035286428)
+
 
 - Chose the following options:
   - **Recovery Point:** Latest processed
@@ -148,13 +156,15 @@ Most importantly, this test is isolated — it **does not impact the source VM**
 
 Then I clicked to initiate the failover.
 
-![failover](./snapshots/test-failover.jpg)
+![Screenshot 2025-06-22 113536](https://github.com/user-attachments/assets/de78bc1a-ab29-4a9f-b962-7def70ea9da3)
+
 
 > Azure started the process of creating a temporary test VM in the East Asia region.
 
-![failover-success](./snapshots/failover-success.jpg)
+![Screenshot 2025-06-22 113548](https://github.com/user-attachments/assets/59a22ebb-217e-4f7b-b8ec-551d9d5d8106)
 
-![failover-vm-created](./snapshots/test-vm-created.jpg)
+![Screenshot 2025-06-22 113601](https://github.com/user-attachments/assets/c20da5a7-250e-4d52-a2a9-7652b7281a26)
+
 
 ### Step 10: Clean Up Test Failover Resources
 
@@ -162,7 +172,8 @@ Since the test VM created during the failover is only for validation purposes, i
 
 - Clicked on **"Cleanup Test Failover"** from the top menu
 
-![cleanup-test](./snapshots/clean-up-test-failover.jpg)
+![Screenshot 2025-06-22 113613](https://github.com/user-attachments/assets/b9a889a8-b644-4b56-bcee-cf79b45aa95f)
+
 
 In the prompt:
 
@@ -170,13 +181,16 @@ In the prompt:
   > `"Test passed successfully"`
 - Confirmed the cleanup
 
-![test-failover-cleanup](./snapshots/test-failover-cleanup.jpg)
+![Screenshot 2025-06-22 113632](https://github.com/user-attachments/assets/0e389a65-7288-40f2-9936-f2211f6dba6b)
+
 
 Azure automatically deleted the temporary test VM and associated resources from the **target region** (East Asia), ensuring everything is clean and no leftover test infrastructure remains.
 
-![cleanup](./snapshots/failover-cleanup-success.jpg)
+![Screenshot 2025-06-22 113642](https://github.com/user-attachments/assets/b9c2f2a1-9ed9-4662-b066-4475813f0ede)
 
-![terminated-vm](./snapshots/vm-terminated.jpg)
+
+![Screenshot 2025-06-22 113656](https://github.com/user-attachments/assets/06a08200-1dec-47d2-85fc-4eabcb8597a4)
+
 
 > ✅ This final step completed the test failover lifecycle and confirmed the replication setup works as expected.
 
