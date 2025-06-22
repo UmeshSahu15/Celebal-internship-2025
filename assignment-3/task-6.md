@@ -23,7 +23,8 @@ Connect-AzAccount
 ```
 
 Here I've used Azure Powershell So, I was good to go!
-![powershell](./snapshots/powershell.jpg)
+![Screenshot 2025-06-22 143208](https://github.com/user-attachments/assets/b4abc0e0-3e53-4e1c-a5e2-79a6882cbe7a)
+
 
 ### Step 2: Created a Resource Group
 
@@ -32,7 +33,8 @@ I started by creating a dedicated resource group to keep all related resources i
 ```powershell
 New-AzResourceGroup -Name "csi-pwsh-rg" -Location "Central India"
 ```
-![resource-group](./snapshots/resource-group.jpg)
+![Screenshot 2025-06-22 143217](https://github.com/user-attachments/assets/89aad271-f439-4490-90d0-115a058a6453)
+
 
 ### Step 3: Created a Virtual Network and Subnet
 
@@ -48,7 +50,8 @@ $vnet = New-AzVirtualNetwork -Name "pwsh-vnet" `
 ```
 - *This created a clean network with one subnet that the NIC can connect to.*
 
-![vnet](./snapshots/vnet-created.jpg)
+![Screenshot 2025-06-22 143228](https://github.com/user-attachments/assets/6769dafa-a5c5-489b-9195-8c0f4203d63b)
+
 
 ### Step 4: Created a Public IP Address
 
@@ -63,7 +66,7 @@ $publicIp = New-AzPublicIpAddress -Name "pwsh-publicip" `
 
 I chose Static IP to ensure the VM's public IP doesn’t change across restarts.
 
-![public-ip](./snapshots/public-ip.jpg)
+![Screenshot 2025-06-22 143238](https://github.com/user-attachments/assets/013518fa-90d2-4ad9-9d60-0e38dc4d1f97)
 
 
 ### Step 5: Created a Network Security Group and Rule
@@ -83,7 +86,7 @@ $nsg = New-AzNetworkSecurityGroup -ResourceGroupName "csi-pwsh-rg" `
 
 > *This allows us to SSH into the VM after creation.*
 
-![nsg](./snapshots/nsg.jpg)
+![Screenshot 2025-06-22 143248](https://github.com/user-attachments/assets/12b8ccd5-5ba3-4076-9ea8-313684254cad)
 
 ### Step 6: Created a Network Interface (NIC)
 
@@ -100,7 +103,8 @@ $nic = New-AzNetworkInterface -Name "pwsh-nic" `
 
 Every VM requires a NIC to communicate over the network. This step ties everything together.
 
-![Network Interface](./snapshots/nic-created.jpg)
+![Screenshot 2025-06-22 143259](https://github.com/user-attachments/assets/97e2a6b4-1a75-4d1b-b0c8-6f31c27d05e0)
+
 
 ### Step 7: Created the Virtual Machine
 
@@ -130,7 +134,8 @@ New-AzVM -ResourceGroupName "csi-pwsh-rg" `
 
 📦 After a few minutes, the VM was created successfully.
 
-![vm-created](./snapshots/vm.jpg)
+![Screenshot 2025-06-22 143310](https://github.com/user-attachments/assets/c7d4a8ce-c585-4b7e-99b0-1e0a1fe484fa)
+
 
 ### Step 8: Connect to the VM
 
@@ -146,7 +151,8 @@ ssh <username>@<public-ip>
 
 I verified the connection and logged into the Linux VM!
 
-![vm-ssh](./snapshots/vm-ssh.jpg)
+![Screenshot 2025-06-22 143320](https://github.com/user-attachments/assets/1a184313-119e-4987-9103-a67961ba4303)
+
 
 ### Step 9: Verify and Cleanup Resources (Optional)
 
@@ -157,7 +163,8 @@ Get-AzResource -ResourceGroupName "csi-pwsh-rg"
 ```
 This command showed all the associated resources like VM, NIC, NSG, VNet, Public IP, etc. It helped confirm that everything was provisioned properly.
 
-![resource-list](./snapshots/resource-list.jpg)
+![Screenshot 2025-06-22 143327](https://github.com/user-attachments/assets/f2113cb8-d9bc-469b-9be4-868045f62a7f)
+
 
 To avoid extra cost, I deleted everything at the end:
 
@@ -166,7 +173,8 @@ Remove-AzResourceGroup -Name "csi-pwsh-rg" -Force
 ```
 *This will permanently delete all resources inside the group.*
 
-![deleted-rg](./snapshots/deleted-rg.jpg)
+![Screenshot 2025-06-22 143337](https://github.com/user-attachments/assets/370227b7-f57c-476e-9ee8-9d85844f1845)
+
 
 ---
 
