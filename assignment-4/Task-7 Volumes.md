@@ -30,7 +30,8 @@ docker volume ls
 
 And saw `csi_mongo_data` listed. This volume will live outside any container, safe from deletions.
 
-![volume-created](./snapshots/mongo-volume.jpg)
+![Screenshot 2025-06-28 233305](https://github.com/user-attachments/assets/49883fa8-0759-4e89-8746-c072f3c93909)
+
 
 ## 🛠 Step 2: Run a MongoDB Container with Volume Mounted
 
@@ -54,7 +55,8 @@ I verified mounted volume by inspect container:
 docker inspect csimongo
 ```
 
-![volume-mount](./snapshots/volume-mount.jpg)
+![Screenshot 2025-06-28 233313](https://github.com/user-attachments/assets/6ca80705-0e66-4b80-8de1-38cc62bfb85f)
+
 
 I verified it by checking container logs:
 
@@ -64,7 +66,8 @@ docker logs csimongo
 
 Saw logs showing database initialization and readiness.
 
-![mongo-logs](./snapshots/mongo-logs.jpg)
+![Screenshot 2025-06-28 233321](https://github.com/user-attachments/assets/640585c1-7d98-4d76-9b89-3fe8199cd4a5)
+
 
 ---
 
@@ -77,7 +80,8 @@ docker exec -it csimongo mongosh -u admin -p csi@123
 ```
 This gave me a shell inside the container, authenticated with the admin credentials I had set earlier.
 
-![mongo-login](./snapshots/mongo-exec.jpg)
+![Screenshot 2025-06-28 233328](https://github.com/user-attachments/assets/7430c7ca-85d5-440e-93aa-deddbfbf332b)
+
 
 ### 🔸 Creating the Database
 
@@ -94,7 +98,8 @@ db.employees.find();
 ```
 At this point, the collection was empty as expected.
 
-![csi-db](./snapshots/db-created.jpg)
+![Screenshot 2025-06-28 233335](https://github.com/user-attachments/assets/1dd3aa6d-9687-41ae-aeda-a077cc95574e)
+
 
 
 ### 🔸 Inserting Sample Data
@@ -141,7 +146,8 @@ db.employees.insertMany([
   }
 ]);
 ```
-![documents-inserted](./snapshots/documents-inserted.jpg)
+![Screenshot 2025-06-28 233344](https://github.com/user-attachments/assets/5ead7889-1f62-4c7f-925d-2fc494b2535f)
+
 
 Each document represents a CSI intern, along with their domain and location. This is realistic and useful if you're simulating a real-time database app or internal dashboard.
 
@@ -155,7 +161,8 @@ db.employees.find({}, { name: 1, _id: 0 }).pretty()
 ```
 This query fetches only the name field of all documents, omitting the _id for readability.
 
-![db-find](./snapshots/verified-documents.jpg)
+![Screenshot 2025-06-28 233351](https://github.com/user-attachments/assets/8a002952-0e2c-4172-9719-8c68f9998c42)
+
 
 The names were all there and data successfully inserted and retrievable
 
@@ -182,7 +189,8 @@ Nothing was there. But the volume still exists:
 docker volume ls
 ```
 
-![volume-exists](./snapshots/volume-remain.jpg)
+![Screenshot 2025-06-28 233359](https://github.com/user-attachments/assets/de9488e0-f667-4234-927e-5bd882a1794c)
+
 
 This confirmed that the volume is not tied to the container's lifecycle. The data inside it was safe and untouched.
 
@@ -203,7 +211,8 @@ docker run -d \
 
 This effectively created a fresh container, but it reused the existing database files from the volume.
 
-![mongo2-container](./snapshots/mongo2-created.jpg)
+![Screenshot 2025-06-28 233407](https://github.com/user-attachments/assets/62f077ed-4346-4ab7-a74e-5f53ee3d6858)
+
 
 ### 🔸 Logging into the New Container
 
@@ -213,7 +222,8 @@ I connected to this new container:
 docker exec -it csimongo2 mongosh -u admin -p csi@123
 ```
 
-![mongo2-login](./snapshots/mongo2-exec.jpg)
+![Screenshot 2025-06-28 233416](https://github.com/user-attachments/assets/6c2462c1-bace-4f02-9545-6952b9382b62)
+
 
 ### 🔸 Verifying Data is Still There
 
@@ -224,7 +234,8 @@ use csidb;
 db.employees.find();
 ```
 
-![data-verified](./snapshots/data-verified.jpg)
+![Screenshot 2025-06-28 233424](https://github.com/user-attachments/assets/2f4ce632-947c-4d7d-99e2-3fbd94482ef3)
+
 
 Hurray!!! The data was still there! This demonstrates how Docker volumes provide persistent storage completely independent of container lifecycles, exactly how production database setups are designed.
 
