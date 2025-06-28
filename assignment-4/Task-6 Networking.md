@@ -20,7 +20,8 @@ docker network create \
   csi-microservices-net
 ```
 
-![network-created](./snapshots/network-created.jpg)
+![Screenshot 2025-06-28 232934](https://github.com/user-attachments/assets/3c0db4c0-8ac0-4f2b-96bb-80d04152d04b)
+
 
 I verified the network was created properly with:
 
@@ -28,7 +29,8 @@ I verified the network was created properly with:
 docker network inspect csi-microservices-net
 ```
 
-![inspect-network](./snapshots/inspect-network.jpg)
+![Screenshot 2025-06-28 232944](https://github.com/user-attachments/assets/7cb47fc0-ef4d-4588-8ee9-3774872e0d13)
+
 
 Everything looked good. The custom network was in place.
 
@@ -49,7 +51,8 @@ docker run -d \
 
 Using the `--network` flag ensured this container would only be reachable from other containers on the same network which is perfect for internal service communication.
 
-![container-created](./snapshots/container-created.jpg)
+![Screenshot 2025-06-28 233001](https://github.com/user-attachments/assets/a783927f-40ac-4ec5-bb2f-9a48c71af678)
+
 
 I confirmed it with inspect container to make sure it was connected to the custom network.
 
@@ -57,7 +60,8 @@ I confirmed it with inspect container to make sure it was connected to the custo
 docker inspect csi-mongo
 ```
 
-![docker-container](./snapshots/inspect-docker-container.jpg)
+![Screenshot 2025-06-28 233035](https://github.com/user-attachments/assets/fca89cf2-2b03-49e9-b45c-df8517c199f4)
+
 
 ---
 
@@ -72,7 +76,8 @@ npm init -y
 npm install express mongodb
 ```
 
-![packages](./snapshots/installed-packages.jpg)
+![Screenshot 2025-06-28 233044](https://github.com/user-attachments/assets/cd82e396-ae08-4864-9be1-078152fa4aa1)
+
 
 Then, I created the main API file:
 
@@ -111,7 +116,7 @@ EXPOSE 8080
 CMD ["node", "index.js"]
 ```
 
-![source-code](./snapshots/source-code.jpg)
+![Screenshot 2025-06-28 233052](https://github.com/user-attachments/assets/84dc922d-0fc4-4e7b-ada9-1960683ac0db)
 
 Then I built the Docker image:
 
@@ -120,7 +125,7 @@ docker build -t csi-node-api .
 ```
 The build completed successfully, and the image was ready to run.
 
-![node-api-image](./snapshots/node-api-image.jpg)
+![Screenshot 2025-06-28 233059](https://github.com/user-attachments/assets/922d6896-48ff-4076-bf63-1050c7ab91ca)
 
 ---
 
@@ -134,7 +139,7 @@ docker run -d --name csi-api --network csi-microservices-net -p 8080:8080 csi-no
 
 This way, the API could connect to MongoDB using its container name csi-mongo as the hostname using Docker internal DNS
 
-![api-container](./snapshots/api-container.jpg)
+![Screenshot 2025-06-28 233107](https://github.com/user-attachments/assets/9dcb44a3-c0ef-4e14-a3e3-f587b733b3c7)
 
 Inspect Api Container to verify network
 
@@ -142,7 +147,7 @@ Inspect Api Container to verify network
 docker inspect csi-api
 ```
 
-![api-container](./snapshots/inspect-api-container.jpg)
+![Screenshot 2025-06-28 233116](https://github.com/user-attachments/assets/2a85f578-e3ee-4a38-86bd-0389d44eb28a)
 
 ---
 
@@ -160,7 +165,8 @@ The ping worked! That confirmed the containers could talk to each other inside t
 ping csi-mongo
 ```
 
-![ping-success](./snapshots/ping-success.jpg)
+![Screenshot 2025-06-28 233124](https://github.com/user-attachments/assets/d97b8f44-23cd-4e3d-8308-5a1c71d29a3d)
+
 
 Success! The API also fetched data from MongoDB using internal DNS.
 
@@ -184,7 +190,8 @@ Once inside the shell, I switched to the database the API expects to connect to:
 use csidb
 ```
 
-![mongo-login](./snapshots/mongo-login.jpg)
+![Screenshot 2025-06-28 233133](https://github.com/user-attachments/assets/d02ce236-903a-4a04-8300-1cacf73647f1)
+
 
 Then I inserted a list of employee documents:
 
@@ -199,7 +206,7 @@ db.employees.insertMany([
 ]);
 ```
 
-![documents](./snapshots/documents-added.jpg)
+![Screenshot 2025-06-28 233143](https://github.com/user-attachments/assets/86accba8-9e5f-4299-9ef7-b01d872af054)
 
 ### Viewing the API Response in the Browser
 
@@ -209,7 +216,8 @@ Once the data was in place, I opened my browser and visited the API endpoint: `h
 
 The moment the page loaded, it displayed all the employee data that was just added to MongoDB. This confirmed that:
 
-![api-web-view](./snapshots/api-web-view.jpg)
+![Screenshot 2025-06-28 233156](https://github.com/user-attachments/assets/83b7c49c-4ccc-4572-9b35-a31662ba207b)
+
 
 
 ## 🔒 Step 7: Enhanced Security by Removing Default Bridge
@@ -220,7 +228,8 @@ Tested by launching an Alpine container with default network, which couldn’t a
 docker run -it alpine sh
 ```
 
-![ping-test](./snapshots/ping-test.jpg)
+![Screenshot 2025-06-28 233204](https://github.com/user-attachments/assets/5cc12681-4d32-4fa4-9075-92283bb295b6)
+
 
 ---
 
