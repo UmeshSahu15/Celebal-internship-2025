@@ -19,7 +19,7 @@ https://github.com/Vikas-Prince/TECHWAVE/
 cd TECHWAVE
 ```
 
-![git-clone](./snapshots/git-clone.jpg)
+![Screenshot 2025-06-28 225914](https://github.com/user-attachments/assets/70ffa000-e446-4864-9dcc-5b9b862396cc)
 
 > This saved time and let me work with a project I had already customized, making the Docker setup more realistic and closer to a production-ready scenario.
 
@@ -65,7 +65,7 @@ CMD ["nginx", "-g", "daemon off;"]
 
 A minimal, secure, and efficient production image.
 
-![Dockerfile](./snapshots/Dockerfile.jpg)
+![Screenshot 2025-06-28 225922](https://github.com/user-attachments/assets/3f1177b5-a7db-4b76-985b-7d4b27ed1976)
 
 ### 🔹 Step 3: Built and Ran the Docker Image
 
@@ -77,7 +77,8 @@ docker build -t react-multistage:v1 .
 
 Thanks to the multi-stage build, the final image was around 50 MB, which is a big improvement over a standard Node-based image that often ends up being 300–600 MB. This makes it much more efficient for production use.
 
-![docker-build](./snapshots/docker-build.jpg)
+![Screenshot 2025-06-28 225932](https://github.com/user-attachments/assets/2939a754-bc03-4448-9d07-2cda14100cbe)
+
 
 Then ran the container:
 
@@ -85,11 +86,12 @@ Then ran the container:
 docker run -d --name react-multi-container -p 80:80 react-multistage:v1
 ```
 
-![container-created](./snapshots/container-created.jpg)
+![Screenshot 2025-06-28 225939](https://github.com/user-attachments/assets/6492fd38-1730-4254-a950-113f1782a179)
+
 
 To check if it was working, I opened `http://20.244.43.238:80/` in the browser and saw the React app served via NGINX.
 
-![techwave](./snapshots/techwave-view.jpg)
+![Screenshot 2025-06-28 230211](https://github.com/user-attachments/assets/9f3b4b03-b4b6-460e-a728-99d0a7264b25)
 
 The app was running successfully inside a container, served efficiently using NGINX.
 
@@ -103,7 +105,8 @@ To make this image reusable across different environments, I pushed it to my Doc
 docker login
 ```
 
-![login-success](./snapshots/login-success.jpg)
+![Screenshot 2025-06-28 230249](https://github.com/user-attachments/assets/0d6afbf2-e202-45fb-9b1c-d1548ce94a78)
+
 
 2. **Tagged the image**:
 
@@ -111,7 +114,7 @@ docker login
 docker tag react-multistage:v1 vikasprince/csi-multistage-image:v1
 ```
 
-![docker-tag](./snapshots/tag-image.jpg)
+![Screenshot 2025-06-28 230258](https://github.com/user-attachments/assets/2e22efdb-3208-48b3-b5fb-5d9367c036fe)
 
 3. **Pushed the image**:
 
@@ -119,11 +122,13 @@ docker tag react-multistage:v1 vikasprince/csi-multistage-image:v1
 docker push vikasprince/csi-multistage-image:v1
 ```
 
-![docker-push](./snapshots/docker-push.jpg)
+![Screenshot 2025-06-28 230307](https://github.com/user-attachments/assets/6a073b75-6c75-4bec-af08-a32195d97b5d)
+
 
 The image was available in my DockerHub repository.
 
-![docker-hub](./snapshots/docker-hub.jpg)
+![Screenshot 2025-06-28 230315](https://github.com/user-attachments/assets/0b517a43-bc3a-423a-91bf-7c5dd64edb81)
+
 
 ### 🔹 Step 5: Pulled and Ran the Image from DockerHub (Validation)
 
@@ -149,7 +154,8 @@ docker run -d -p 8080:80 vikasprince/csi-multistage-image:v1
 
 The app was successfully pulled and served, confirming registry integration.
 
-![docker](./snapshots/docker-containers.jpg)
+![Screenshot 2025-06-28 230325](https://github.com/user-attachments/assets/e80702f2-1777-4e6b-954e-0faf84429d8b)
+
 
 ---
 
