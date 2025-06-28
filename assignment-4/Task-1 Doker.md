@@ -50,7 +50,7 @@ To confirm that Docker is correctly installed, I ran the following command:
 $ docker --version
 Docker version 24.0.5, build ced0996
 ```
-![docker-version](./snapshots/docker-version.jpg)
+![Screenshot 2025-06-28 224354](https://github.com/user-attachments/assets/9ebfdba3-695c-43fa-81fd-987e8544e97d)
 
 ---
 
@@ -67,7 +67,8 @@ It will provides an overview of the Docker daemon, the system’s configuration,
 docker info
 ```
 
-![docker-info](./snapshots/docker-info.jpg)
+![Screenshot 2025-06-28 224417](https://github.com/user-attachments/assets/86c11e06-695c-4796-8898-44ad1233033c)
+
 
 ### 2. Pull an Image from Docker Hub
 
@@ -77,7 +78,8 @@ It pulls the latest NGINX image from Docker Hub, Docker's public image registry.
 docker pull nginx
 ```
 
-![docker-pull](./snapshots/docker-pull.jpg)
+![Screenshot 2025-06-28 224435](https://github.com/user-attachments/assets/24586d51-59df-4ef2-9392-915d730140ef)
+
 
 ### 3. List all Images
 
@@ -86,7 +88,8 @@ docker images
 ```
 This command lists all Docker images that are currently available on local system, including their repository names, tags, image IDs, and sizes.
 
-![docker-images](./snapshots/docker-images.jpg)
+![Screenshot 2025-06-28 224446](https://github.com/user-attachments/assets/1adff8de-4689-4b76-88d7-5485eef73732)
+
 
 ### 4. Run a Container
 
@@ -99,7 +102,7 @@ docker run --name webserver -d -p 8080:80 nginx
 
 This command runs the NGINX image in detached mode (-d), allowing the container to run in the background. It also maps port 8080 on my local machine to port 80 inside the container, making the web server accessible via http://<vm-ip>:8080.
 
-![docker-container](./snapshots/docker-container.jpg)
+![Screenshot 2025-06-28 224459](https://github.com/user-attachments/assets/0ab736a0-09a8-4cda-85bd-af499b492815)
 
 ### 5. List Running Containers
 
@@ -108,7 +111,8 @@ docker ps
 ```
 This shows all currently running containers, including their IDs, names, status, and port mappings.
 
-![running-containers](./snapshots/list-container.jpg)
+![Screenshot 2025-06-28 224515](https://github.com/user-attachments/assets/4260d747-142e-4bde-ac4e-993dd6096a82)
+
 
 ### 6. List All Containers (including stopped)
 
@@ -117,7 +121,7 @@ docker ps -a
 ```
 Displays all containers, whether running or stopped. It's particularly useful for debugging and cleaning up old containers.
 
-![list-containers](./snapshots/docker-ps-a.jpg)
+![Screenshot 2025-06-28 224528](https://github.com/user-attachments/assets/f45024be-4af2-423b-8083-77c71a6b7c99)
 
 ### 7. Stop a Container
 
@@ -126,7 +130,8 @@ docker stop <container_id>
 ```
 Gracefully shuts down a running container. I can use this command to safely stop any active container.
 
-![stop-container](./snapshots/stop-container.jpg)
+![Screenshot 2025-06-28 224540](https://github.com/user-attachments/assets/17193f40-b66d-4a3a-be7f-e11c9b58fad8)
+
 
 ### 8. Start Container
 
@@ -135,7 +140,8 @@ docker start <container_id>
 ```
 By using this command to start an existing (but stopped) Docker container by specifying its container ID or name.
 
-![start-container](./snapshots/start-container.jpg)
+![Screenshot 2025-06-28 224553](https://github.com/user-attachments/assets/6ffb5b2a-8562-4cbc-b738-637d3d308a00)
+
 
 ### 9. View Logs of a Container
 
@@ -144,7 +150,8 @@ docker logs <container_id>
 ```
 By viewing a container’s logs, I can troubleshoot and debug issues within the application running inside the container.
 
-![container-logs](./snapshots/container-logs.jpg)
+![Screenshot 2025-06-28 224609](https://github.com/user-attachments/assets/980b0440-aa11-47f7-87fd-61cb94a9d5a8)
+
 
 ### 10. Monitor Container Resource Usage
 
@@ -153,7 +160,7 @@ docker stats
 ```
 This command provides a real-time stream of container resource usage, such as CPU and memory utilization. It’s essential for monitoring the health of containers and ensuring efficient resource allocation.
 
-![docker-stats](./snapshots/docker-stats.jpg)
+![Screenshot 2025-06-28 224623](https://github.com/user-attachments/assets/cb8b62b4-551c-438e-9dad-332fbd2d9168)
 
 ### 11. Inspect a Container
 
@@ -162,7 +169,7 @@ docker inspect <container_id>
 ```
 This command gives me low-level details about a container in JSON format, which can be helpful for advanced debugging or gathering more information about container configuration.
 
-![inspect-container](./snapshots/docker-inspect.jpg)
+![Screenshot 2025-06-28 224636](https://github.com/user-attachments/assets/621bb55c-c28b-4320-9652-e6df3aece6bb)
 
 ### 12. Execute a Command in a Running Container
 
@@ -171,7 +178,8 @@ docker exec -it <container_id> /bin/bash
 ```
 This command allows me to execute a command in a running container. Using the `-it` flags, I can open an interactive terminal session inside the container, such as `/bin/bash` for a shell.
 
-![docker-exec](./snapshots/docker-exec.jpg)
+![Screenshot 2025-06-28 224647](https://github.com/user-attachments/assets/1d4230df-843a-4d5a-a21c-c0cc7458ba33)
+
 
 ### 13. Remove a Container
 
@@ -180,7 +188,8 @@ docker rm <container_id>
 ```
 After stopping a container, I can remove it with this command to free up space and keep my environment clean.
 
-![remove-container](./snapshots/remove-container.jpg)
+![Screenshot 2025-06-28 224700](https://github.com/user-attachments/assets/3f346d42-c241-469f-b588-1b548b58baa8)
+
 
 ### 14. Remove an Image
 
@@ -189,7 +198,7 @@ docker rmi <image_id>
 ```
 This command allows me to remove an image from my local system, freeing up disk space when no longer needed.
 
-![remove-image](./snapshots/remove-image.jpg)
+![Screenshot 2025-06-28 225224](https://github.com/user-attachments/assets/21fe0735-fa65-40ae-aa11-997afacc4233)
 
 ---
 
