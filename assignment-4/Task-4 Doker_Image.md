@@ -19,7 +19,8 @@ mkdir task3-dockerfile-image
 cd task3-dockerfile-image
 ```
 
-![directory](./snapshots/directory.jpg)
+![Screenshot 2025-06-28 230440](https://github.com/user-attachments/assets/6e6b4841-20a8-4544-a29a-f0b1d027345b)
+
 
 This is where I placed my app files and the Dockerfile. I like keeping things organized in separate folders for each image or container.
 
@@ -41,7 +42,8 @@ server.listen(8080, () => {
 
 The only change here is the port and response message — just to make it clear which image was built.
 
-![index-file](./snapshots/index-file.jpg)
+![Screenshot 2025-06-28 230454](https://github.com/user-attachments/assets/6f7be3f4-248c-43f1-b76f-5474db0bb960)
+
 
 ### 🔹 Write the Dockerfile
 
@@ -70,7 +72,8 @@ Here’s a quick breakdown:
 * `EXPOSE 4000`: This is just for documentation — it doesn’t actually publish the port.
 * `CMD`: This tells Docker what command to run when the container starts.
 
-![Dockerfile](./snapshots/Dockerfile.jpg)
+![Screenshot 2025-06-28 230502](https://github.com/user-attachments/assets/6c67e364-6aed-49be-8dd0-5f4fadf09a79)
+
 
 ### 🔹 Build and Run the Docker Image
 
@@ -79,11 +82,12 @@ docker build -t csi-dockerfile-method:v1 .
 docker run --name csi-dockerfile-container -d -p 8080:8080 csi-dockerfile-method:v1
 ```
 
-![docker-build](./snapshots/container.jpg)
+![Screenshot 2025-06-28 230509](https://github.com/user-attachments/assets/5f4a2136-eda9-4885-bb5f-1288d8179790)
 
 This built the image and ran it successfully. I opened my browser at `http://<vm-ip>:8080` and saw the custom message from the server a great sign that the image works exactly as expected.
 
-![container-web-view](./snapshots/web-view.jpg)
+![Screenshot 2025-06-28 230518](https://github.com/user-attachments/assets/28cbdd5a-1497-4970-aeba-00baea39f996)
+
 
 ---
 
@@ -108,7 +112,8 @@ mkdir /csi-app
 cd /csi-app
 ```
 
-![node-runtime](./snapshots/manual-image-node.jpg)
+![Screenshot 2025-06-28 230525](https://github.com/user-attachments/assets/55c90c3b-3e09-4781-8083-9c98eca220cd)
+
 
 Then I used `vi` to create `index.js` (or used `echo` for simpler editing):
 
@@ -124,7 +129,8 @@ server.listen(3000, () => {
 });
 ```
 
-![index-file](./snapshots/index-file-manual.jpg)
+![Screenshot 2025-06-28 230534](https://github.com/user-attachments/assets/935631e5-4f4d-499e-86fe-4c744af173e4)
+
 
 Then initialized the app and installed Node.js dependencies:
 
@@ -137,7 +143,8 @@ And finally ran the app:
 node index.js
 ```
 
-![app-running](./snapshots/app-running-inside.jpg)
+![Screenshot 2025-06-28 230541](https://github.com/user-attachments/assets/8237ad3b-2bd7-4180-bb29-a6eedf776c98)
+
 
 Once I confirmed it worked inside the container, I exited:
 
@@ -164,7 +171,8 @@ docker commit  --change='WORKDIR /csi-app' --change='CMD ["node", "index.js"]' 4
 
 This way, I make sure that the image starts correctly without having to manually change directories or specify the run command every time.
 
-![docker-commit](./snapshots/docker-commit.jpg)
+![Screenshot 2025-06-28 230548](https://github.com/user-attachments/assets/33db04ea-6a93-4985-8731-880fdd99bfc4)
+
 
 
 Now I had a new image built entirely from a running container, without writing a Dockerfile.
@@ -175,11 +183,13 @@ Now I had a new image built entirely from a running container, without writing a
 docker run --name csi-manual-container -d -p 3000:3000 csi-manual-image:v1
 ```
 
-![manual-container](./snapshots/container-created.jpg)
+![Screenshot 2025-06-28 230556](https://github.com/user-attachments/assets/9be6196b-66c0-46bd-a822-34cd3a44347d)
+
 
 I accessed it via `http://98.70.42.63:3000/` and saw the custom message — success again!
 
-![web-view](./snapshots/manual-web-view.jpg)
+![Screenshot 2025-06-28 230604](https://github.com/user-attachments/assets/e01e7444-8ee9-42d2-a901-b6b8614d8888)
+
 
 ---
 
