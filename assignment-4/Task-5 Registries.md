@@ -16,7 +16,8 @@ I started by using my own React project from GitHub. I cloned the repository lik
 git clone https://github.com/Vikas-Prince/TECHWAVE
 ```
 
-![git-clone](./snapshots/clone-git.jpg)
+![Screenshot 2025-06-28 230745](https://github.com/user-attachments/assets/128b6137-5d92-447b-9e54-187623376bc6)
+
 
 Once inside the project folder I already have Dockerfile So, I built a Docker image locally using:
 
@@ -26,7 +27,8 @@ docker build -t my-node-app:v1 .
 
 This created a custom image with the tag `react-app:v1`. The build process completed successfully and I could see my image listed in docker images.
 
-![docker-build](./snapshots/docker-build-image.jpg)
+![Screenshot 2025-06-28 230753](https://github.com/user-attachments/assets/fb7d521b-b579-4af6-ba4e-0ea9c5b6982e)
+
 
 ## Step 2: Pushed Image to Docker Hub
 
@@ -38,7 +40,7 @@ Before pushing, I logged into my Docker Hub account using the CLI:
 docker login -u vikasprince
 ```
 
-![docker-login](./snapshots/docker-login.jpg)
+![Screenshot 2025-06-28 230800](https://github.com/user-attachments/assets/88b330e5-95b3-40f1-9051-ed7038ebecb7)
 
 ### 🔹 Tagged the image for Docker Hub:
 
@@ -56,11 +58,13 @@ Finally, I pushed the image:
 docker push vikasprince/react-app:v1
 ```
 
-![docker-push](./snapshots/docker-push.jpg)
+![Screenshot 2025-06-28 230807](https://github.com/user-attachments/assets/d6599230-81cb-4cc8-9940-c4d2575e5b81)
+
 
 I went to [docker hub](https://hub.docker.com/) to double-check and yes, the image was listed under my repository.
 
-![docker-hub](./snapshots/dockerhub.jpg)
+![Screenshot 2025-06-28 230816](https://github.com/user-attachments/assets/ca0fbeb1-cd89-4055-ae0c-002a005d17d8)
+
 
 ---
 
@@ -83,11 +87,12 @@ To simulate a real-world enterprise setup, I decided to push the same image to a
 
 The registry was ready in less than a minute.
 
-![registry-review](./snapshots/ecr-review.jpg)
+![Screenshot 2025-06-28 230826](https://github.com/user-attachments/assets/5ae91344-d124-4022-8abd-be1308e5b67f)
+
 
 I successfully deployed a private `acr` registry.
 
-![registry-created](./snapshots/ecr-created.jpg)
+![Screenshot 2025-06-28 230838](https://github.com/user-attachments/assets/d4a2f32f-6141-4e3d-8804-67cc77970e73)
 
 ### 🔹 Enabled Admin Access (Temporarily)
 
@@ -100,7 +105,7 @@ To push images from my local machine, I temporarily enabled the **Admin user** s
 
 > Note: This is okay for testing, but in production, we should use service principals or managed identities instead of admin credentials.
 
-![ecr-access](./snapshots/enable-admin.jpg)
+![Screenshot 2025-06-28 230851](https://github.com/user-attachments/assets/c8fe7ad6-257b-4710-98e0-b8c93a820fcf)
 
 
 ### 🔹 Logged in from Docker CLI
@@ -111,7 +116,7 @@ Using the login server, I authenticated from the terminal:
 docker login csitask5privateregistry.azurecr.io
 ```
 
-![acr-login](./snapshots/private-registry-login.jpg)
+![Screenshot 2025-06-28 230901](https://github.com/user-attachments/assets/eadfb295-e31c-438c-8450-7c06a21021fc)
 
 ### 🔹 Tagged image for ACR:
 
@@ -131,7 +136,8 @@ docker push csitask5privateregistry.azurecr.io/react-app:v1
 
 It showed that, confirming the private push was successful
 
-![pushed-ecr](./snapshots/ecr-pushed.jpg)
+![Screenshot 2025-06-28 230910](https://github.com/user-attachments/assets/52e97c96-aca3-4789-ad8d-d272db638cf3)
+
 
 ---
 
@@ -146,7 +152,8 @@ docker rmi csitask5privateregistry.azurecr.io/react-app:v1
 
 This ensured that Docker wouldn’t use any cached image and it would have to download the image entirely from the registry.
 
-![removed](./snapshots/removed-images.jpg)
+![Screenshot 2025-06-28 230918](https://github.com/user-attachments/assets/9457a11a-7135-4566-a466-2c4c657c5911)
+
 
 ### 🔹 Pulling from Docker Hub
 
@@ -162,7 +169,8 @@ After the image was downloaded, I ran it as a container:
 docker run --name dockerhub-container -d -p 3000:3000 vikasprince/react-app:v1
 ```
 
-![docker-container](./snapshots/hub-container.jpg)
+![Screenshot 2025-06-28 230927](https://github.com/user-attachments/assets/89988438-e7e3-4ac2-bb3a-2bf9d9adac00)
+
 
 Everything started smoothly, the container was up and running, and the app was accessible on port 3000.
 
@@ -182,7 +190,7 @@ docker run --name ecr-container -d -p 8080:80 csitask5privateregistry.azurecr.io
 
 Just like with the Docker Hub version, this container ran without any issues. The app was working as expected on port 8080.
 
-![ecr-container](./snapshots/ecr-container.jpg)
+![Screenshot 2025-06-28 230936](https://github.com/user-attachments/assets/d6a81590-dcfc-4bde-a1c2-6b8cbda3ffea)
 
 This confirmed my images could be distributed and run anywhere, just like production CI/CD pipelines do.
 
