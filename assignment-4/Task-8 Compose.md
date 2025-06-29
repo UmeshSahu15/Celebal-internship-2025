@@ -38,7 +38,8 @@ The basic structure includes:
 - MongoDB connection using mongodb
 - API endpoint `/` to return employee records
 
-![backend](./snapshots/backend-source-code.jpg)
+![Screenshot 2025-06-29 191348](https://github.com/user-attachments/assets/f6b0050e-4608-4470-9360-b85ed128e72d)
+
 
 
 ### 🔹 Dockerizing the Backend API
@@ -62,7 +63,8 @@ EXPOSE 8080
 CMD ["node", "app.js"]
 ```
 
-![backend-dockerfile](./snapshots/backend-dockerfile.jpg)
+![Screenshot 2025-06-29 191401](https://github.com/user-attachments/assets/1c3eda42-c8a2-408a-bd7e-f6e46fece446)
+
 
 ### 🔹 Build Backend Docker Image
 
@@ -72,13 +74,15 @@ I built the Docker image locally with:
 docker build -t csi-backend:v1 .
 ```
 
-![backend-image](./snapshots/backend-image-build.jpg)
+![Screenshot 2025-06-29 191412](https://github.com/user-attachments/assets/b6768a6b-56bb-42e3-b71a-1b1cfa23078a)
+
 
 ### 🔹 Created Azure Container Registry and Login
 
 First, I created an Azure Container Registry named `csiecr` in my Azure subscription to host the Docker images.
 
-![container-registry](./snapshots/ecr.jpg)
+![Screenshot 2025-06-29 191432](https://github.com/user-attachments/assets/8c326b42-b1a9-46b5-b757-bdb65a7e1749)
+
 
 Next, I logged in to my Azure account using:
 
@@ -86,7 +90,8 @@ Next, I logged in to my Azure account using:
 az login
 ```
 
-![az-login](./snapshots/az-login.jpg)
+![Screenshot 2025-06-29 191443](https://github.com/user-attachments/assets/e20a0465-db55-4b6b-970e-42e9202d8817)
+
 
 ### 🔹 Tag and Push the Backend Image to ACR
 
@@ -108,11 +113,13 @@ I pushed the tagged image to the Azure Container Registry:
 docker push csiecr.azurecr.io/csi-backend:v1
 ```
 
-![backend-push](./snapshots/backend-push.jpg)
+![Screenshot 2025-06-29 191455](https://github.com/user-attachments/assets/7160944a-3406-4b5d-9515-6fb67cae5de9)
+
 
 Finally I verified pushed Image in Container Registry Repositories
 
-![repository](./snapshots/ecr-image.jpg)
+![Screenshot 2025-06-29 191509](https://github.com/user-attachments/assets/18ab3241-7473-4b51-b835-452ae73104be)
+
 
 ---
 
@@ -122,7 +129,8 @@ I developed the React frontend application to display CSI intern data fetched fr
 
 The React app was built to call the backend API and show employee details dynamically.
 
-![frontend](./snapshots/frontend-source-code.jpg)
+![Screenshot 2025-06-29 191525](https://github.com/user-attachments/assets/4579df5c-9685-4621-ab06-102db2b1da9c)
+
 
 ### 🔹 Created Multi-Stage Dockerfile with Nginx Reverse Proxy
 
@@ -133,17 +141,20 @@ To optimize the image size and serve the React app efficiently, I created a mult
 - Nginx is configured to act as a reverse proxy to forward API requests to the backend.
 - The final image is smaller and more efficient for production use.
 
-![frontend-image](./snapshots/nginx-conf.jpg)
+![Screenshot 2025-06-29 191541](https://github.com/user-attachments/assets/f2fa2449-e355-4282-85c5-f839cca3738d)
+
 
 ### 🔹 Build and Tag the Frontend Image
 
 I built the Docker image locally with the following command:
 
-![docker-build](./snapshots/frontend-build.jpg)
+![Screenshot 2025-06-29 191556](https://github.com/user-attachments/assets/83a1ca00-b0be-4b51-9d0e-c7c0f1f32c92)
+
 
 After building, I tagged the image for pushing to Docker Hub:
 
-![image-tag](./snapshots/frontend-tag.jpg)
+![Screenshot 2025-06-29 191607](https://github.com/user-attachments/assets/22f2b526-faee-439a-9026-94e856fe3a51)
+
 
 ### 🔹 Pushed the Frontend Image to Docker Hub
 
@@ -154,13 +165,16 @@ docker login
 docker push mydockerhub/csi-frontend:v1
 ```
 
-![fronted-image-push](./snapshots/frontend-pushed.jpg)
+![Screenshot 2025-06-29 191617](https://github.com/user-attachments/assets/c8a91a69-1917-44ca-8e54-93266d403f46)
+
+
 
 ### 🔹 Verified in DockerHub
 
 Finally, I verified the uploaded image appeared in my Docker Hub repository.
 
-![docker-hub](./snapshots/dockerhub-image.jpg)
+![Screenshot 2025-06-29 191632](https://github.com/user-attachments/assets/d5b04830-3ec8-4038-a6e4-f0f84e2b79db)
+
 
 ---
 
@@ -168,7 +182,8 @@ Finally, I verified the uploaded image appeared in my Docker Hub repository.
 
 Now that both the backend and frontend images were ready, I created a docker-compose.yml file to orchestrate the entire stack. `[docker-compose-file](./docker-compose.yml)`
 
-![docker-compose](./snapshots/docker-compose-file.jpg)
+![Screenshot 2025-06-29 191645](https://github.com/user-attachments/assets/127f89b2-db97-4bf7-aa41-1b459f68b6d0)
+
 
 ### 🔹 Key Details
 
@@ -237,7 +252,8 @@ docker-compose up -d
 
 This command Starts all services defined in the docker-compose.yml file in detached mode (-d), so it runs in the background.
 
-![docker-compose](./snapshots/docker-compose-success.jpg)
+![Screenshot 2025-06-29 191702](https://github.com/user-attachments/assets/b9945b27-5714-4e9c-8dd1-41ecd52e7a70)
+
 
 ### 🔹 Confirming All Containers Are Running
 
@@ -249,7 +265,8 @@ This command Starts all services defined in the docker-compose.yml file in detac
 
  The output confirmed that the containers named `csi-mongo`, `csi-backend`, and `csi-frontend` were running without any issues. Each container was correctly assigned and exposed on the intended ports, which reassured me that the initial deployment was successful.
 
- ![docker-compose-containers](./snapshots/containers-running.jpg)
+ ![Screenshot 2025-06-29 191713](https://github.com/user-attachments/assets/c251692c-8b9b-4cd0-b952-fdefaa4b6d1a)
+
 
 
 ### 🔹 Verifying the Custom Docker Network
@@ -268,7 +285,8 @@ docker network inspect csi_net
 
 This inspection showed that all three containers were connected to the csi_net bridge network, ensuring secure and isolated communication between services.
 
-![docker-compose-network](./snapshots/network.jpg)
+![Screenshot 2025-06-29 191724](https://github.com/user-attachments/assets/e52c554e-f4ae-44ed-a99c-e12da23345a9)
+
 
 ### 🔹 Checking Persistent Volume for MongoDB
 
@@ -280,7 +298,8 @@ docker volume ls
 
 I found the mongo_data volume created as expected. Inspecting the volume provided details confirming it was properly configured and mounted to the MongoDB container’s data directory, ensuring data durability beyond container lifecycle events.
 
-![mongo-volume](./snapshots/mongo-volume.jpg)
+![Screenshot 2025-06-29 191734](https://github.com/user-attachments/assets/4433a227-61ed-4187-bd0f-899f0de0ac6a)
+
 
 ### 🔹 Ensuring MongoDB Started Successfully
 
@@ -291,7 +310,8 @@ docker logs csi-mongo
 ```
 The logs showed a clean startup without errors, confirming that the database service was operational and ready to accept connections.
 
-![mongo-logs](./snapshots/mongo-logs.jpg)
+![Screenshot 2025-06-29 191745](https://github.com/user-attachments/assets/a0698f8e-a9f8-4718-ac0a-990a18ba2f89)
+
 
 ### 🔹 Connecting to MongoDB
 
@@ -301,7 +321,8 @@ To interact with the database, I accessed the MongoDB shell inside the container
 docker exec -it csi-mongo mongosh -u admin -p 'csi@123'
 ```
 
-![mongo-login](./snapshots/db-running.jpg)
+![Screenshot 2025-06-29 191755](https://github.com/user-attachments/assets/32ac0f34-1e9d-4912-a443-945a9d7f3869)
+
 
 
 ### 🔹 Validating Backend API Functionality
@@ -313,7 +334,8 @@ docker logs csi-backend
 ```
 The logs indicated the backend API was running without errors successfully running on port 8080.
 
-![backend-log](./snapshots/backend-log.jpg)
+![Screenshot 2025-06-29 191803](https://github.com/user-attachments/assets/c2cd282f-3678-4598-9aae-4ce0bed2773f)
+
 
 #### **Internal-Only API Access**
 It's important to note that the backend container is not exposed to the host machine or the internet. It does not publish any ports externally, which is intentional for security reasons.
@@ -324,7 +346,8 @@ Instead, it communicates only within the internal Docker network `(csi_net)`, wh
 
 I opened the frontend UI in my browser with my machine IP `http://4.240.88.24:80/`
 
-![frontend-ui](./snapshots/no-data-view.jpg)
+![Screenshot 2025-06-29 191813](https://github.com/user-attachments/assets/09d7f8ec-5c95-4d6a-8902-72c3526c83d8)
+
 
 At this initial stage, since no data existed in the MongoDB database, the React app loaded successfully but displayed an empty table with no employee records. This confirmed the frontend was correctly connected to the backend API but was reflecting the current empty state of the database.
 
@@ -351,13 +374,15 @@ db.employees.insertMany([
 
 To ensure the records were successfully added.
 
-![mongo-data](./snapshots/data-added.jpg)
+![Screenshot 2025-06-29 191825](https://github.com/user-attachments/assets/e1ca6b27-641e-47bc-b5fb-007aa0ae9b56)
+
 
 ### 🔹 Frontend Displays the Newly Added Data
 
 With data now present in MongoDB, I refreshed the frontend browser `http://4.240.88.24/`
 
-![frontend-view](./snapshots/frontend-web-view-data.jpg)
+![Screenshot 2025-06-29 191840](https://github.com/user-attachments/assets/f6c2bd8d-a595-40c3-91da-3127b21e7ea6)
+
 
 The React frontend immediately displayed a neatly formatted table containing the employee records fetched via the backend API.
 
@@ -385,13 +410,15 @@ db.employees.insertMany([
 ])
 ```
 
-![update-db](./snapshots/update-db.jpg)
+![Screenshot 2025-06-29 191853](https://github.com/user-attachments/assets/3515f85a-cb20-40d4-9fb0-769aa0bd51b9)
+
 
 ### 🔹 Verifying Frontend UI After Data Update
 
 With the MongoDB records updated, I returned to the browser and refreshed the frontend UI at `http://4.240.88.24:80/`
 
-![updated-ui](./snapshots/updated-ui.jpg)
+![Screenshot 2025-06-29 191906](https://github.com/user-attachments/assets/1d2c1edc-1523-47d6-8390-3956b5485d1c)
+
 
 The React application reloaded successfully and displayed the newly added employee records in a clean tabular layout. The previously removed entry for Venkat no longer appeared, confirming that the frontend was correctly reflecting the updated database state via the backend API.
 
@@ -416,7 +443,8 @@ This ensured that:
  - The custom network csi_net created for service isolation was deleted.
  - The persistent volume mongo_data used by MongoDB was removed, cleaning up the stored database data.
 
-![docker-compose-down](./snapshots/docker-compose-down.jpg)
+![Screenshot 2025-06-29 191917](https://github.com/user-attachments/assets/74d0df1c-3c05-42f2-8c97-6b9d91362452)
+
 
 ---
 
