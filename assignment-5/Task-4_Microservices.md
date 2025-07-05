@@ -29,12 +29,14 @@ The goal was to implement a robust, automated CI/CD pipeline using Jenkins multi
 ### Step 1: Azure VM Setup for Jenkins
 Before installing Jenkins, I provisioned a dedicated Linux VM on Azure to act as the Jenkins master and agent node.
 
-![jenkins-vm](./snapshots/jenkins-vm.jpg)
+![Screenshot 2025-07-05 221546](https://github.com/user-attachments/assets/9c8647dd-f96d-4eed-b749-e64abba6ed6f)
+
 
 - Installed Azure CLI and kubectl on the VM:
 - Logged in to Azure via CLI and set AKS context:
 
-![aks-context](./snapshots/aks-contxt.jpg)
+![Screenshot 2025-07-05 221555](https://github.com/user-attachments/assets/f7621e5a-1e87-40d6-9f00-15894f2d34a1)
+
 
 This confirmed that the VM had full kubectl access to the AKS cluster and was ready for CI/CD operations.
 
@@ -43,23 +45,28 @@ This confirmed that the VM had full kubectl access to the AKS cluster and was re
 
 * Deployed Jenkins as a Docker container on the VM.
 
-![docker-container](./snapshots/jenkins-container.jpg)
+![Screenshot 2025-07-05 221604](https://github.com/user-attachments/assets/1a50ddc4-8512-4762-a4ea-86236f71854e)
+
 
 * Retrieved the initial admin password from Jenkins secrets inside the container.
 
-![password](./snapshots/jenkins-container1.jpg)
+![Screenshot 2025-07-05 221614](https://github.com/user-attachments/assets/76db9894-1900-48ac-a03d-d013bd4da154)
+
 
 * Used the password to log in to Jenkins via the VM's IP address in a web browser.
 
-![login-jenkins](./snapshots/jenkins-login.jpg)
+![Screenshot 2025-07-05 221623](https://github.com/user-attachments/assets/7d6204c1-e76d-495b-99a6-38dccaa15e88)
+
 
 * Accessed Jenkins UI by browsing to `http://<vm-ip>:8080`.
 
-![jenkins-web](./snapshots/jenkins-view.jpg)
+![Screenshot 2025-07-05 221635](https://github.com/user-attachments/assets/46bc445d-2abc-4fdf-83c8-041a1d5d0adf)
+
 
 * Installed all necessary plugins to support Git, Docker, Kubernetes, and multibranch pipeline functionalities.
 
-![packages](./snapshots/plugins-installed.jpg)
+![Screenshot 2025-07-05 221647](https://github.com/user-attachments/assets/7d8352fc-b28b-470a-8683-c08743f6a802)
+
 
 ---
 
@@ -67,13 +74,15 @@ This confirmed that the VM had full kubectl access to the AKS cluster and was re
 
 * Configured the VM as a Jenkins agent node so all pipeline jobs run on this VM.
 
-![node](./snapshots/slave-connected.jpg)
+![Screenshot 2025-07-05 221655](https://github.com/user-attachments/assets/2d62ab77-75e0-42d2-8edf-97c94cec1c59)
+
 
 * This allows for local execution of Docker builds and kubectl commands on the VM.
 
 * Ensured the agent node was online and ready.
 
-![node-connected](./snapshots/slave-webview.jpg)
+![Screenshot 2025-07-05 221706](https://github.com/user-attachments/assets/c181246e-9d76-430a-bc43-b0928d2e6ad4)
+
 
 ---
 
@@ -99,7 +108,8 @@ Apply it using:
 kubectl apply -f jenkins-serviceaccount.yaml
 ```
 
-![jenkins-sa](./snapshots/sa-created.jpg)
+![Screenshot 2025-07-05 221715](https://github.com/user-attachments/assets/e727c841-4098-4861-8881-47eb7c89df6b)
+
 
 #### 4.2 Define a Role with specific permissions scoped to the microservices namespace:
 
@@ -155,7 +165,8 @@ Apply with:
 kubectl apply -f jenkins-role.yaml
 ```
 
-![jenkins-role](./snapshots/role-created.jpg)
+![Screenshot 2025-07-05 221802](https://github.com/user-attachments/assets/59673212-7be0-4532-bf92-0cd9ca1f6c79)
+
 
 #### 4.3 Bind the Role to the Jenkins Service Account:
 
@@ -181,7 +192,9 @@ Apply with:
 kubectl apply -f jenkins-rolebinding.yaml
 ```
 
-![jenkins-role-bind](./snapshots/role-bind-created.jpg)
+![Screenshot 2025-07-05 221812](https://github.com/user-attachments/assets/de80fa79-411c-4c4e-8d84-413b51238382)
+
+
 
 ---
 
@@ -211,7 +224,8 @@ Then, I retrieved the token and CA certificate from the secret using:
 ```bash
 kubectl describe secret jenkins-secret -n microservices
 ```
-![jenkins-secret](./snapshots/jenkins-secret.jpg)
+![Screenshot 2025-07-05 221821](https://github.com/user-attachments/assets/a07635ac-a3b4-4662-825c-57931c9270ed)
+
 
 I configured Jenkins with this token to authenticate securely to the AKS cluster from the pipeline jobs.
 
@@ -227,7 +241,8 @@ I configured Jenkins with this token to authenticate securely to the AKS cluster
  * Each microservice is maintained in its own Git branch.
  * Jenkins automatically scans branches and triggers pipeline jobs in parallel for each microservice.
 
- ![multi-branch](./snapshots/ci-pipeline-created.jpg)
+ ![Screenshot 2025-07-05 221832](https://github.com/user-attachments/assets/3c374d3b-b431-4dcd-85f3-7db4179aaafd)
+
 
 ### Step 8: Jenkinsfile CI/CD Pipeline Overview
 
@@ -348,11 +363,14 @@ Here’s a screenshot showing the **console output** of a successful pipeline bu
   - `kubectl apply` successfully applied manifests to AKS
   - Kubernetes pods and services were verified
 
-![manifest](./snapshots/manifest-created.jpg)
+![Screenshot 2025-07-05 221845](https://github.com/user-attachments/assets/fce3ee72-6538-4a0c-8375-0421137d2f61)
 
-![build-logs](./snapshots/logs1.jpg)
 
-![build-logs](./snapshots/logs2.jpg)
+![Screenshot 2025-07-05 221854](https://github.com/user-attachments/assets/c1b9489d-46ab-485e-a9e5-d6de0e8a2cdf)
+
+
+![Screenshot 2025-07-05 221903](https://github.com/user-attachments/assets/d4f22485-06dc-4747-9707-13baff11ebc1)
+
 
 
 ---
@@ -373,7 +391,8 @@ kubectl get pods -n microservices
 kubectl get svc -n microservices
 ```
 
-![pods](./snapshots/verified%20pods.jpg)
+![Screenshot 2025-07-05 221912](https://github.com/user-attachments/assets/40ffa677-709e-4b81-a27b-3ef340e4481c)
+
 
 The frontend service is exposed via a LoadBalancer with an external IP assigned by Azure
 
@@ -381,12 +400,14 @@ The frontend service is exposed via a LoadBalancer with an external IP assigned 
 
 To verify the full deployment, I opened a browser and navigated to the LoadBalancer external IP:
 
-![web-view](./snapshots/web-view.jpg)
+![Screenshot 2025-07-05 222114](https://github.com/user-attachments/assets/2842a076-f254-454a-aaed-3162ee9fa937)
+
 
 The Online Boutique microservices demo app loaded successfully:
   - Product listing, cart, checkout, and search functions were responsive and confirmed the internal microservices were working correctly.
 
-![web-view](./snapshots/web-view2.jpg)
+![Screenshot 2025-07-05 222146](https://github.com/user-attachments/assets/2a2e4794-fbbb-4f5e-802a-a6bf250c3fe8)
+
 
 
 ---
