@@ -32,7 +32,8 @@ sudo systemctl enable docker
 sudo systemctl start docker
 ```
 
-![docker-installed](./snapshots/docker-installed.jpg)
+![Screenshot 2025-07-05 214500](https://github.com/user-attachments/assets/025c0d5f-1b28-4680-94c0-d165d5a8d22d)
+
 
 To confirm Docker is working:
 
@@ -65,7 +66,8 @@ To test:
 kubectl version --client
 ```
 
-![kubectl-installed](./snapshots/installed-kubectl.jpg)
+![Screenshot 2025-07-05 214512](https://github.com/user-attachments/assets/1b5426be-f8bc-4078-b5fd-146f068b99b1)
+
 
 > This confirms we can send commands to the cluster once it’s up.
 
@@ -86,7 +88,8 @@ Verify installation:
 minikube version
 ```
 
-![minikube-installed](./snapshots/minikube-installed.jpg)
+![Screenshot 2025-07-05 214545](https://github.com/user-attachments/assets/5117784e-a372-49f4-b547-38c92a0d5f32)
+
 
 > At this point, I had everything ready to initialize the cluster.
 
@@ -102,7 +105,8 @@ minikube start --driver=docker
 
 This took a few minutes as it downloaded the necessary Kubernetes binaries and images, and initialized the control plane.
 
-![minikube-start](./snapshots/minikube-started.jpg)
+![Screenshot 2025-07-05 214554](https://github.com/user-attachments/assets/8658fd86-2f8b-422b-96e6-fd0c02256a01)
+
 
 ---
 
@@ -121,7 +125,8 @@ NAME       STATUS   ROLES           AGE   VERSION
 minikube   Ready    control-plane   2m    v1.33.1
 ```
 
-![minikube-nodes](./snapshots/minikube-nodes.jpg)
+![Screenshot 2025-07-05 214603](https://github.com/user-attachments/assets/93585c43-6e47-4b45-967e-80fa79463118)
+
 
 > Seeing the node in `Ready` state confirmed that the cluster was operational.
 
@@ -132,7 +137,8 @@ kubectl cluster-info
 minikube status
 ```
 
-![cluster-status](./snapshots/minikube-status.jpg)
+![Screenshot 2025-07-05 214612](https://github.com/user-attachments/assets/92c7b3ca-16f8-4a7c-932f-6a4499e0e718)
+
 
 And even peeked inside with Docker:
 
@@ -141,7 +147,8 @@ docker exec -it minikube bash
 docker ps
 ```
 
-![running-container](./snapshots/running-pods.jpg)
+![Screenshot 2025-07-05 214622](https://github.com/user-attachments/assets/586fee2b-79bc-4a2d-a123-1c2fd9e0edd0)
+
 
 All good — the cluster was up and running!
 
@@ -170,7 +177,8 @@ Before applying the pod configuration, I created a separate namespace called `cs
 kubectl create ns csi-devops
 ```
 
-![pod-ns](./snapshots/ns)
+![Screenshot 2025-07-05 214634](https://github.com/user-attachments/assets/ff0eb6c8-3b4f-4d12-b494-60b47d8d769f)
+
 
 Namespaces are super useful when we want to logically separate different environments or teams within the same cluster.
 
@@ -186,7 +194,8 @@ To verify that the pod was created and running:
 kubectl get pods -n csi-devops
 ```
 
-![pod](./snapshots/pod.jpg)
+![Screenshot 2025-07-05 214634](https://github.com/user-attachments/assets/0e7bfe5a-d66a-4610-b64b-3160ce22b14c)
+
 
 With the pod up and running inside its own namespace, I was able to confirm that everything was working as expected.
 
