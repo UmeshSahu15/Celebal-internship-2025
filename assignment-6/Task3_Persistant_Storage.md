@@ -22,7 +22,8 @@ sudo apt update
 sudo apt install nfs-kernel-server
 ```
 
-![nfs-server](./snapshots/nfs.jpg)
+<img width="935" height="439" alt="Screenshot 2025-07-12 154935" src="https://github.com/user-attachments/assets/2c347217-88da-4304-969f-d1a996cbba3d" />
+
 
 This command installs the NFS kernel server, which will allow the machine to share directories over the network.
 
@@ -52,7 +53,8 @@ I added the following line to the file:
 
 This line tells the NFS server to export the /mnt/nfs/mongodata directory with read/write permissions (rw) to any client (indicated by *). The options sync and no_subtree_check are recommended for performance and consistency.
 
-![nfs-server](./snapshots/export-nfs.jpg)
+<img width="934" height="437" alt="Screenshot 2025-07-12 154943" src="https://github.com/user-attachments/assets/10445bd1-be6e-4625-9882-3e057daa98c8" />
+
 
 ### Apply Config and Start Server
 
@@ -65,7 +67,8 @@ sudo systemctl start nfs-kernel-server
 sudo systemctl enable nfs-kernel-server
 ```
 
-![nfs-server-load](./snapshots/nfs-server-status.jpg)
+<img width="931" height="436" alt="Screenshot 2025-07-12 154952" src="https://github.com/user-attachments/assets/c95fd5e3-1c23-48fb-9d8b-0f2368b74884" />
+
 
 ---
 
@@ -95,7 +98,8 @@ spec:
     server: 20.40.56.121
 ```
 
-![pv](./snapshots/pv.jpg)
+<img width="934" height="457" alt="Screenshot 2025-07-12 155003" src="https://github.com/user-attachments/assets/f821a867-f49e-423f-aba8-d1f09354e5ec" />
+
 
 Explanation:
 
@@ -120,7 +124,8 @@ kubectl get pv mongo-pv
 
 I saw the PV listed with the capacity, access mode, and the NFS server path.
 
-![pv-created](./snapshots/pv-created.jpg)
+<img width="931" height="230" alt="Screenshot 2025-07-12 155010" src="https://github.com/user-attachments/assets/8ac585e3-d49b-48f2-9a11-259f9f2259d9" />
+
 
 ---
 
@@ -144,7 +149,8 @@ spec:
   storageClassName: manual
 ```
 
-![pvc](./snapshots/pvc.jpg)
+<img width="932" height="381" alt="Screenshot 2025-07-12 155019" src="https://github.com/user-attachments/assets/c77ecb44-657f-44f2-a106-ff85d6ee56e1" />
+
 
 Explanation:
 
@@ -164,7 +170,8 @@ Verified the created PVC
 kubectl get pvc mongo-pvc
 ```
 
-![pvc-bound](./snapshots/pvc-bound.jpg)
+<img width="934" height="287" alt="Screenshot 2025-07-12 155027" src="https://github.com/user-attachments/assets/195fed20-4781-4764-9353-7b99788f5154" />
+
 
 This confirms that the PVC was successfully created and is bound to the nfs-pv.
 
