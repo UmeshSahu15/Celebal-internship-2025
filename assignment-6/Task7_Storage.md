@@ -40,11 +40,13 @@ kubectl apply -f csi-mongo-pvc.yaml
 kubectl get pvc
 ```
 
-![mongo-pvc](./snapshots/pvc.jpg)
+<img width="1130" height="284" alt="Screenshot 2025-07-12 172254" src="https://github.com/user-attachments/assets/3e2cf015-f26c-41f6-8c27-80c12aa6610d" />
+
 
 Initially, the PVC appeared in the Pending state. This is expected it waits for a pod to be scheduled that actually uses the claim. Once the pod is created and scheduled on a node, Kubernetes dynamically provisions an Azure Disk, creates the PersistentVolume, and binds it to the PVC.
 
-![mongo-pvc](./snapshots/pvc-wait.jpg)
+<img width="1131" height="390" alt="Screenshot 2025-07-12 172259" src="https://github.com/user-attachments/assets/e304702c-20c9-4e32-a2b0-1afec11e5ecb" />
+
 
 No need to manually create a PersistentVolume, AKS handles it automatically through the StorageClass.
 
@@ -97,7 +99,8 @@ kubectl get pvc
 kubectl get pv
 ```
 
-![mongo-bind](./snapshots/pvc-bound.jpg)
+<img width="1130" height="326" alt="Screenshot 2025-07-12 172305" src="https://github.com/user-attachments/assets/eecaf344-2e76-4f02-9c27-8897adb68962" />
+
 
 After the pod was created, the PVC status changed from Pending to Bound, and the associated PersistentVolume was automatically created and attached.
 
@@ -109,7 +112,8 @@ kubectl describe pod mongo-pod
 
 The volume was successfully mounted inside the container at /data/db, confirming that dynamic provisioning worked as expected.
 
-![mongo-pod](./snapshots/pod.jpg)
+<img width="1129" height="421" alt="Screenshot 2025-07-12 172311" src="https://github.com/user-attachments/assets/c2d8d724-a200-4d29-a72f-997d69b1b9fd" />
+
 
 ---
 
@@ -121,7 +125,8 @@ Once the pod was up and running, I wanted to test if the storage was really work
 kubectl exec -it mongo-pod -- mongosh -u admin -p csi123
 ```
 
-![mongo-login](./snapshots/mongo-login.jpg)
+<img width="1135" height="487" alt="Screenshot 2025-07-12 172317" src="https://github.com/user-attachments/assets/d30d9e23-826b-4c83-a4fd-dadfb67417e0" />
+
 
 Inside the Mongo shell, I created a new database called `csidb` and inserted some sample documents into a collection named `employees`:
 
@@ -144,7 +149,8 @@ db.employees.insertMany([
 db.employees.find({}, { name: 1, _id: 0 }).pretty();
 ```
 
-![data-added](./snapshots/data-added.jpg)
+<img width="1132" height="785" alt="Screenshot 2025-07-12 172332" src="https://github.com/user-attachments/assets/1fa26667-d020-413e-8124-3eb0a8199e33" />
+
 
 All names were displayed, confirming that the database and insertions were working perfectly. Everything was working smoothly so far!
 
@@ -174,7 +180,8 @@ Once the pod came back up, I logged into MongoDB again:
 kubectl exec -it csi-mongo-pod -- mongosh -u admin -p csi123
 ```
 
-![mongo2](./snapshots/mongo2-login.jpg)
+<img width="1121" height="407" alt="Screenshot 2025-07-12 172340" src="https://github.com/user-attachments/assets/6d73f705-a834-4673-bed2-5c3ef059031e" />
+
 
 I switched to the same csidb database and ran a quick query to check if my previously inserted documents were still there:
 
@@ -183,7 +190,8 @@ use csidb;
 db.employees.find().pretty();
 ```
 
-![mongo-data](./snapshots/data-present.jpg)
+<img width="1133" height="551" alt="Screenshot 2025-07-12 172345" src="https://github.com/user-attachments/assets/0af34bb0-97fa-4cbd-ae4a-fc098ae1bdd7" />
+
 
 🎉 All previously inserted records were still present! This confirmed that the data was not tied to the pod lifecycle but persisted in the mounted volume exactly as expected from a PVC-backed storage system.
 
