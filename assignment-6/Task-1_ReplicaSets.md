@@ -14,7 +14,8 @@ To get started, I created a **Minikube cluster** locally. This was used as the b
 
 Minikube provided an isolated and consistent setup for testing various Kubernetes objects without needing a full-scale cloud setup.
 
-![minikube](./snapshots/minikube.jpg)
+<img width="932" height="408" alt="Screenshot 2025-07-12 153114" src="https://github.com/user-attachments/assets/d6f2e495-ddd6-4403-9846-3d7ca7abf916" />
+
 
 ## Scenario: Scalable Web Application
 
@@ -55,7 +56,8 @@ spec:
         - containerPort: 80
 ```
 
-![replicaset](./snapshots/replicaset.jpg)
+<img width="931" height="503" alt="Screenshot 2025-07-12 153139" src="https://github.com/user-attachments/assets/d21bd2b5-79ae-4548-b1a4-8deb7cc3a338" />
+
 
 I applied kubectl command to create replica set
 
@@ -65,7 +67,8 @@ kubectl get replicasets
 kubectl get pods -l app=csi-app
 ```
 
-![replicaset](./snapshots/replicasetpods.jpg)
+<img width="930" height="405" alt="Screenshot 2025-07-12 153148" src="https://github.com/user-attachments/assets/0dad05c5-6e90-4384-9cf2-59df06c389b5" />
+
 
 The ReplicaSet successfully ensured that 3 identical pods were running at all times.
 
@@ -103,7 +106,8 @@ spec:
         - containerPort: 80
 ```
 
-![deployment](./snapshots/deployment.jpg)
+<img width="930" height="504" alt="Screenshot 2025-07-12 153157" src="https://github.com/user-attachments/assets/42e63a74-8978-4682-b08e-ab3adb8dd969" />
+
 
 I applied above deployment set using `kubectl` and verified deployment and pods
 
@@ -113,7 +117,8 @@ kubectl get deployments
 kubectl get pods -l app=csi-app
 ```
 
-![deployment](./snapshots/deployment2.jpg)
+<img width="927" height="423" alt="Screenshot 2025-07-12 153204" src="https://github.com/user-attachments/assets/23e7b8f0-c365-4d6d-a2d9-051661ad1a47" />
+
 
 ### Rolling Update Simulation
 
@@ -124,7 +129,8 @@ kubectl set image deployment/csi-app-deployment csi-app=nginx:1.21
 kubectl rollout status deployment/csi-app-deployment
 ```
 
-![rollout](./snapshots/rollout.jpg)
+<img width="932" height="496" alt="Screenshot 2025-07-12 153211" src="https://github.com/user-attachments/assets/ec493a8b-0642-4bc5-9f5a-d8f965a60856" />
+
 
 he Deployment handled the rolling update smoothly. Kubernetes gradually replaced old pods with new ones, ensuring that there was no downtime during the update. I also tested a rollback by using:
 
@@ -132,7 +138,8 @@ he Deployment handled the rolling update smoothly. Kubernetes gradually replaced
 kubectl rollout undo deployment/csi-app-deployment
 ```
 
-![rollback](./snapshots/rollback.jpg)
+<img width="930" height="435" alt="Screenshot 2025-07-12 153220" src="https://github.com/user-attachments/assets/510fb516-61f4-4f6f-a0fe-057af5775893" />
+
 
 This demonstrated how Deployments support versioning, rollback, and gradual updates.
 
@@ -156,7 +163,8 @@ After scaling, I checked the state of the pods:
 kubectl get pods
 ```
 
-![scaled](./snapshots/scaled.jpg)
+<img width="933" height="472" alt="Screenshot 2025-07-12 153229" src="https://github.com/user-attachments/assets/d2805422-efae-4d36-b8fc-6504a0438662" />
+
 
 The Deployment handled scaling very well, including managing new pods efficiently while maintaining the rolling update process.
 
@@ -193,7 +201,8 @@ Once I deleted I again checked the running pods by using
 kubectl get pods --watch
 ```
 
-![healed](./snapshots/healed.jpg)
+<img width="929" height="491" alt="Screenshot 2025-07-12 153237" src="https://github.com/user-attachments/assets/82762217-8ddb-48ac-a9f7-c20cd7b01e35" />
+
 
 Within a second, Kubernetes launched a new pod to maintain the desired number of replicas.
 
