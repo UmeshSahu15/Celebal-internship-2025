@@ -37,7 +37,8 @@ kubectl create namespace mern-stack
 
 This helps in ensuring that all resources related to the application (e.g., MongoDB, mongo-express) are contained within their own scope and don't interfere with other deployments or services in the cluster.
 
-![namespace](./snapshots/ns-created.jpg)
+<img width="925" height="334" alt="Screenshot 2025-07-12 154028" src="https://github.com/user-attachments/assets/6322420f-6d92-4dec-82a9-34ee2bf05eb7" />
+
 
 ---
 
@@ -61,7 +62,8 @@ data:
 
 This `mongo-secret` contains the base64-encoded MongoDB username and password. It ensures that sensitive credentials are not stored directly in plaintext within Kubernetes configuration files.
 
-![secret](./snapshots/secret-created.jpg)
+<img width="924" height="357" alt="Screenshot 2025-07-12 154037" src="https://github.com/user-attachments/assets/c07f1773-ae2e-4888-bb28-7bc59a87e928" />
+
 
 ### Step 3: Deployed MongoDB with Persistent Storage
 
@@ -117,7 +119,8 @@ To verify that the MongoDB pods are running correctly:
 kubectl get pods -n mern-stack
 ```
 
-![mongo](./snapshots/mongo-created.jpg)
+<img width="930" height="427" alt="Screenshot 2025-07-12 154106" src="https://github.com/user-attachments/assets/f16260f1-509f-41d2-9070-bacdbe738e51" />
+
 
 ---
 
@@ -153,7 +156,8 @@ To check that the service was created correctly:
 kubectl get svc -n mern-stack mongo
 ```
 
-![mongo-service](./snapshots/mongo-service.jpg)
+<img width="932" height="494" alt="Screenshot 2025-07-12 154139" src="https://github.com/user-attachments/assets/7cdf360f-95cb-44ce-ac2c-8a91b00b8baa" />
+
 
 ---
 
@@ -212,7 +216,8 @@ I checked the pod status:
 ```bash
 kubectl get pods -n mern-stack
 ```
-![mongo-express](./snapshots/mongo-express.jpg)
+<img width="925" height="460" alt="Screenshot 2025-07-12 154202" src="https://github.com/user-attachments/assets/0f60aa74-a3d6-46f4-9c09-4a674e285104" />
+
 
 ---
 
@@ -250,7 +255,8 @@ To confirm it was created successfully:
 kubectl get svc -n mern-stack
 ```
 
-![mongo-express](./snapshots/express-clusterip.jpg)
+<img width="934" height="531" alt="Screenshot 2025-07-12 154213" src="https://github.com/user-attachments/assets/f583a117-dd73-4c0f-968e-b1c3aec3f3a9" />
+
 
 ---
 
@@ -268,7 +274,8 @@ Then, I retrieved the assigned NodePort
 kubectl get svc mongo-express -n mern-stack
 ```
 
-![express-service](./snapshots/nodeport.jpg)
+<img width="927" height="536" alt="Screenshot 2025-07-12 154220" src="https://github.com/user-attachments/assets/682f3def-d693-4e5d-b113-0bb1f9741199" />
+
 
 ---
 
@@ -289,16 +296,19 @@ Then, I waited for the EXTERNAL-IP to be assigned:
 kubectl get svc mongo-express -n mern-stack
 ```
 
-![load-balancer](./snapshots/loadbalancer.jpg)
+<img width="930" height="509" alt="Screenshot 2025-07-12 154230" src="https://github.com/user-attachments/assets/c5bfeb60-5522-45b4-80fc-f170991b2f4d" />
+
 
 After the LoadBalancer service was provisioned, I could simply visit the EXTERNAL-IP of the service in my browser and access the MongoDB management UI.
 
-![web-view](./snapshots/web-view.jpg)
+<img width="933" height="478" alt="Screenshot 2025-07-12 154242" src="https://github.com/user-attachments/assets/240773e3-be07-431f-9306-3fa05ce056f4" />
+
 
 This would be the typical interface for performing CRUD operations on MongoDB:
 Here, I can interact with the database collections, manipulate data, and manage the MongoDB instance.
 
-![web-view2](./snapshots/web-view2.jpg)
+<img width="930" height="454" alt="Screenshot 2025-07-12 154254" src="https://github.com/user-attachments/assets/0a8d5be7-94e8-4bcf-837d-fb38ce4fc7fc" />
+
 
 This would provide external access without exposing NodePorts manually a preferred option in production cloud environments.
 
