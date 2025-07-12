@@ -56,7 +56,8 @@ kubectl describe node aks-csipool-12348000-vmss000000 | grep Taints
 
 I saw the taint `dedicated=high-CPU:NoSchedule` listed under the node's description, confirming it was applied correctly.
 
-![tains](./snapshots/Taints.jpg)
+<img width="1133" height="456" alt="Screenshot 2025-07-12 172134" src="https://github.com/user-attachments/assets/328dca86-970b-410f-8626-964d884d4403" />
+
 
 ---
 
@@ -101,7 +102,8 @@ kubectl get pods -o wide
 
 I checked the NODE column to ensure that my `high-cpu-app` pod was scheduled on the tainted node `aks-nodepool1-123456-0`.
 
-![taints](./snapshots/pod-test.jpg)
+<img width="1127" height="532" alt="Screenshot 2025-07-12 172141" src="https://github.com/user-attachments/assets/07b839df-ac5a-4ccd-bcfc-d8b95b13df27" />
+
 
 ---
 
@@ -134,7 +136,8 @@ I applied the pod manifest for the regular app:
 kubectl apply -f regular-app.yaml
 ```
 
-![taints](./snapshots/test2.jpg)
+<img width="1124" height="389" alt="Screenshot 2025-07-12 172146" src="https://github.com/user-attachments/assets/1618ce60-63be-4524-bb74-3e9492b4b941" />
+
 
 I used the following command to check the status of the pod:
 
@@ -142,7 +145,8 @@ I used the following command to check the status of the pod:
 kubectl describe pod regular-app
 ```
 
-![taints](./snapshots/test-describe.jpg)
+<img width="1136" height="537" alt="Screenshot 2025-07-12 172152" src="https://github.com/user-attachments/assets/ff0dd38f-8ff3-414f-810c-39f3cab1600c" />
+
 
 In the pod description, I saw that it wasn’t scheduled onto the tainted node. Kubernetes had scheduled it onto one of the other available nodes without the taint.
 
@@ -168,7 +172,8 @@ To confirm that the taint was removed, I ran:
 kubectl describe node aks-csipool-12348000-vmss000000 | grep Taints
 ```
 
-![untainted](./snapshots/untainted.jpg)
+<img width="1133" height="297" alt="Screenshot 2025-07-12 172159" src="https://github.com/user-attachments/assets/0c439b90-2070-4b1d-ae93-ad3d8c95011d" />
+
 
 The taint was no longer present, confirming that the node was now available for all pods to be scheduled.
 
