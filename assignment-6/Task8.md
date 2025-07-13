@@ -26,8 +26,8 @@ To confirm that the cluster was accessible and operational, I ran:
 ```bash
 kubectl get nodes
 ```
+![minikube](https://github.com/user-attachments/assets/b103a3ae-149b-4e58-b591-93b828188d04)
 
-![minikube](./snapshots/minikube.jpg)
 
 This confirmed that the Minikube node was available and operational, so I was ready to proceed with configuring the probes.
 
@@ -66,7 +66,8 @@ docker buildx build -t vikasprince/health-app:v1 .
 
 This command created an image called `health-app:v1`, which would be used in the Kubernetes pod manifest.
 
-![docker-image](./snapshots/node-image.jpg)
+![node-image](https://github.com/user-attachments/assets/32138563-4e07-49c7-b1e6-4439cb809a2c)
+
 
 This command builds the image using BuildKit but does not automatically make it available to the local Docker environment (like docker images), unless you specify an output method.
 
@@ -80,7 +81,8 @@ docker buildx build --load -t vikasprince/health-image:v1 .
 
 This step ensures that the image is available for use with Kubernetes manifests or local testing.
 
-![docker-image](./snapshots/image-load-buildx.jpg)
+![image-load-buildx](https://github.com/user-attachments/assets/abf017ee-2726-47cb-8fed-93c6e1cc4193)
+
 
 ### Step 4: Push the Docker Image to a Container Registry
 
@@ -91,7 +93,8 @@ docker push vikasprince/health-image:v1
 ```
 This made the csi-node-app image available in the docker repository for use in minikube.
 
-![image-push](./snapshots/image-push.jpg)
+![image-push](https://github.com/user-attachments/assets/c6c96735-d20e-4844-b6ab-f9ae3771c557)
+
 
 ## Step 5: Created the Kubernetes Pod Manifest
 
@@ -143,7 +146,8 @@ This created the pod in the kubernetes cluster. To verify the pod was up and run
 kubectl get pods
 ```
 
-![probes](./snapshots/pod.jpg)
+![pod](https://github.com/user-attachments/assets/f914326d-6f6b-49d7-9236-ec6ae1180e8e)
+
 
 The pod was running, but the readiness probe would initially fail because the app was simulating a delay in readiness.
 
@@ -161,7 +165,8 @@ kubectl describe pod csi-node-app
 
 Initially, the pod was marked as `NotReady`. After the readiness delay, the status transitioned to `Ready`, confirming that Kubernetes correctly handled the readiness check.
 
-![readiness-probe](./snapshots/readiness-probe.jpg)
+![readiness-probe](https://github.com/user-attachments/assets/94dafb62-770b-433b-bc98-d89f7918e2c0)
+
 
 ## Step 8: Test the Liveness Probe
 
@@ -213,7 +218,8 @@ I then checked the pod’s status to confirm everything was running properly:
 kubectl get pods
 ```
 
-![startup-probe](./snapshots/startup-probes.jpg)
+![startup-probes](https://github.com/user-attachments/assets/de6920b8-ff62-4a29-b545-86b53613e9cd)
+
 
 After the pod was `Running`, I verified the probe status with:
 
@@ -223,7 +229,8 @@ kubectl describe pod csi-node-app
 
 I made sure that the Startup Probe was functioning correctly, ensuring Kubernetes waited for the application to complete its startup process before checking the other probes.
 
-![startup](./snapshots/startup.jpg)
+![startup](https://github.com/user-attachments/assets/a92f8b9c-44a7-4735-80c4-b436cdc9e52a)
+
 
 ---
 
