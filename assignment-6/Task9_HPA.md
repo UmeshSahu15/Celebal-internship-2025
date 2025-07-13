@@ -58,14 +58,16 @@ These resources work together to provide a robust, scalable, and maintainable de
 
 Below is the architecture of this application, illustrating its key components and how they interact.
 
-![Architecture](snapshots/k8s%20architect.png)
+<img width="1187" height="626" alt="k8s architect" src="https://github.com/user-attachments/assets/ae67efc7-6477-44a0-a4a6-2a8fa9a46ae2" />
+
 
 
 ### Step 1: Setting Up the Kubernetes Environment
 
 First things first: I made sure that Minikube and kubectl were set up and running on my local machine. Since I wanted to replicate a production environment, I also ensured that my Kubernetes cluster was ready to handle multiple resources, including persistent storage, secrets, and replicas.
 
-![minikube](./snapshots/minikube.jpg)
+![minikube](https://github.com/user-attachments/assets/7f106e97-62c7-4fda-87d8-9b9f10fe2b9d)
+
 
 ### Step 2: Cloning the Repository and Preparing Kubernetes Resources
 
@@ -76,7 +78,8 @@ git clone https://github.com/Vikas-Prince/K8s-FullStack-Deployment.git
 cd K8s-FullStack-Deployment
 ```
 
-![git-clone](./snapshots/git-clone.jpg)
+![git-clone](https://github.com/user-attachments/assets/44127089-d574-4783-a49c-b4c491d447c0)
+
 
 ### Step 3: Creating a Namespace
 
@@ -87,7 +90,8 @@ kubectl apply -f namespace.yml
 kubectl get ns
 ```
 
-![ns-created](./snapshots/ns-created.jpg)
+![ns-created](https://github.com/user-attachments/assets/6d8da758-9397-4d5a-bcd1-0d9cc15000b7)
+
 
 ### Step 4: Setting Up Persistent Volumes and Persistent Volume Claims
 
@@ -100,8 +104,8 @@ kubectl apply -f persistent-volume-claim.yml
 ```
 
 I made sure the PVC was properly bound to the Persistent Volume, which allows MongoDB to store its data even if the pod restarts or crashes.
+![pvc](https://github.com/user-attachments/assets/953c92f4-6f0c-479b-8f86-1c6e40f69f3c)
 
-![pv-pvc](./snapshots/pvc.jpg)
 
 ### Step 5: Creating Secrets and ConfigMaps
 
@@ -114,7 +118,8 @@ kubectl apply -f mongo-config.yml
 
 These resources ensure that my Mongo Express and MongoDB applications can function properly without hardcoding sensitive information.
 
-![secret-configs](./snapshots/secret-config.jpg)
+![secret-config](https://github.com/user-attachments/assets/c388041e-e74f-4061-a9ce-68fa94f8c2ef)
+
 
 ### Step 6: Deploying MongoDB
 
@@ -127,7 +132,8 @@ kubectl apply -f mongo-service.yml
 
 The StatefulSet is crucial here because it manages the MongoDB pod’s lifecycle, ensuring the data remains persistent and the pod’s identity remains stable.
 
-![mongo](./snapshots/mongo.jpg)
+![mongo](https://github.com/user-attachments/assets/7308a422-c7e5-4196-9f22-0fcfb3bab6a6)
+
 
 ### Step 7: Deploying Mongo Express
 
@@ -138,7 +144,8 @@ kubectl apply -f mongo-express-deployment.yml
 kubectl apply -f mongo-express-service.yml
 ```
 
-![mongo-express](./snapshots/mongo-express.jpg)
+![mongo-express](https://github.com/user-attachments/assets/8da7a0b6-dc4d-4109-bcbe-3d9b5287c1f8)
+
 
 ### Step 8: Configuring Horizontal Pod Autoscaling (HPA)
 
@@ -148,7 +155,8 @@ The next step was to enable Horizontal Pod Autoscaling for Mongo Express to auto
 kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml
 ```
 
-![metric-server](./snapshots/metric-server.jpg)
+![metric-server](https://github.com/user-attachments/assets/593831b4-cdaa-44bd-a699-14a2b0710225)
+
 
 After installing the Metrics Server, I modified its deployment to allow insecure TLS communication with Kubelets:
 
@@ -171,7 +179,8 @@ kubectl apply -f mongo-express-hpa.yml
 
 This step ensures that Mongo Express will scale automatically depending on the resource utilization.
 
-![hpa](./snapshots/hpa.jpg)
+![hpa](https://github.com/user-attachments/assets/47da589a-b1c2-42d7-864c-a28090f77320)
+
 
 ### Step 9: Verifying the Deployment
 
@@ -198,7 +207,8 @@ Once the script was running, I accessed the Mongo Express web interface at the p
 - Username: `admin`
 - Password: `pass`
 
-![web-ui](./snapshots/mernstackapp.png)
+<img width="1518" height="876" alt="mernstackapp" src="https://github.com/user-attachments/assets/8e593f51-3299-492e-b81c-0d1dea80fff7" />
+
 
 ## Step 11: Verifying Horizontal Pod Autoscaling (HPA)
 
@@ -214,7 +224,8 @@ kubectl get pods -n mernstack
 kubectl get hpa -n mernstack
 ```
 
-![hpa](./snapshots/hpa1.jpg)
+![hpa1](https://github.com/user-attachments/assets/1951db44-48f7-4a6b-bb2a-89ff38dc7853)
+
 
 At this stage, the pods are consuming very little CPU (around 2%), so no scaling occurs — the deployment remains at 2 pods.
 
@@ -245,7 +256,8 @@ kubectl get pods -n mernstack -l app=frontend-pod -w
 
 Over time, the pod count increased, scaling up to as many as 10 pods, since the usage exceeded the new threshold of 1%.
 
-![scale-up](./snapshots/scaleup.jpg)
+![scaleup](https://github.com/user-attachments/assets/02085b20-850f-4508-8ef6-fef424e91b86)
+
 
 ### Testing Scale-Down Behavior
 
@@ -266,12 +278,13 @@ Again, I monitored the pod activity using:
 kubectl get pods -n mernstack -w
 ```
 
-![scale-down](./snapshots/scale-down.jpg)
+![scale-down](https://github.com/user-attachments/assets/e9ac9952-e8b2-4302-89a1-43a8b6c5902f)
+
 
 
 Finally, once the load dropped and the target CPU utilization was patched back to a realistic threshold (50%), the HPA gradually scaled down the number of pods. Eventually, the deployment returned to the desired minimum replica count of 2, confirming that both scale-up and scale-down functionalities are working as expected.
+![scale-down-success](https://github.com/user-attachments/assets/59339e99-7957-425b-b94b-924d4d232e0f)
 
-![scale-down](./snapshots/scale-down-success.jpg)
 
 ---
 
