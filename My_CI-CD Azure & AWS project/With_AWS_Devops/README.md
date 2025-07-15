@@ -1,5 +1,9 @@
 # Automated Spring Boot Deployment with Jenkins CI/CD on AWS ECS (Fargate)
 
+<img width="1400" height="788" alt="final" src="https://github.com/user-attachments/assets/daf5a9a2-6105-4fd2-9a5b-de8b0b4c528b" />
+
+
+
 ## Project Description
 
 This project automates the deployment of a Dockerized Spring Boot application to **AWS ECS (Fargate)** using **Jenkins** as the CI/CD tool. It includes integration with **SonarQube**, **Docker**, **AWS ECR**, **CloudWatch**, and optionally **Prometheus/Grafana** for monitoring. This solution is ideal for teams looking to deploy microservices without managing server infrastructure manually.
