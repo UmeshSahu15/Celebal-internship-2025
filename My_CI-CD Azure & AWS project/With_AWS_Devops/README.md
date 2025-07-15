@@ -1,6 +1,6 @@
 # Automated Spring Boot Deployment with Jenkins CI/CD on AWS ECS (Fargate)
+<img width="1400" height="788" alt="final" src="https://github.com/user-attachments/assets/bf4b8ce2-b8d2-4347-a556-83a23165f022" />
 
-<img width="1400" height="788" alt="final" src="https://github.com/user-attachments/assets/daf5a9a2-6105-4fd2-9a5b-de8b0b4c528b" />
 
 
 
