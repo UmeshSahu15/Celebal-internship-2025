@@ -1,6 +1,7 @@
 # Automated Azure Container Instance Deployment with Azure DevOps CI/CD Pipelines
 
-<img width="945" height="534" alt="Screenshot 2025-07-15 233320" src="https://github.com/user-attachments/assets/c80cad53-d6bc-44d7-a1a0-9fe1e85c070b" />
+
+<img width="945" height="534" alt="Screenshot 2025-07-15 233320" src="https://github.com/user-attachments/assets/cb4de5a7-55f8-4cb3-b8b5-9c17a1a13a76" />
 
 
 ## Project Description
