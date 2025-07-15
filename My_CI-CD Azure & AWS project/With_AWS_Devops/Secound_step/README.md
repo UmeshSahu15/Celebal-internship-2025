@@ -1,6 +1,7 @@
 # Step 2: GitHub, Jenkins, and AWS Integration Setup
 
-<img width="880" height="341" alt="jenkins" src="https://github.com/user-attachments/assets/9184922a-1043-45c6-8fba-8b765ff4af8d" />
+<img width="880" height="341" alt="jenkins" src="https://github.com/user-attachments/assets/6dcc6782-b3b4-4613-b729-a2bce919753c" />
+
 
 
 ## Overview
