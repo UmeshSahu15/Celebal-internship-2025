@@ -90,7 +90,8 @@ I created a Task Group in Azure DevOps named `pipeline-template.yml`. It bundles
         ${{ parameters.tag }}
 ```
 
-![pipeline-template](./snapshots/template.png)
+<img width="1915" height="1027" alt="template" src="https://github.com/user-attachments/assets/939f7d15-1239-4f12-b58a-7d451591dbca" />
+
 
 > The Task Group is designed to be reusable across services. Just pass different imageName, tag, and registry values as inputs.
 
@@ -124,7 +125,8 @@ stages:
         registry: $(registry)
 ```
 
-![template](./snapshots/main-pipeline.png)
+<img width="1913" height="972" alt="main-pipeline" src="https://github.com/user-attachments/assets/c3adf7bd-31d4-4bed-9c5c-4801113a99fb" />
+
 
 ---
 
@@ -139,11 +141,13 @@ Once the code was pushed to the `main` branch, the pipeline was automatically tr
 3. **Docker Build** — Docker image was built from the generated JAR.
 4. **Push to ACR** — Image was tagged using `$(Build.BuildId)` and pushed to the configured ACR (`acrglobalcsi`).
 
-![image-pushed](./snapshots/image-pushed.png)
+<img width="1918" height="773" alt="image-pushed" src="https://github.com/user-attachments/assets/56bfb382-713f-4f76-9392-b35bd1af628d" />
+
 
 >  All steps were encapsulated in the template and executed using the self-hosted agent, confirming template reuse and variable injection worked perfectly.
 
-![pipeline-run](./snapshots/pipeline-success.png)
+<img width="1918" height="1022" alt="pipeline-success" src="https://github.com/user-attachments/assets/35cf40a3-c94a-4ff7-9c27-a76c962d41a6" />
+
 
 ---
 
