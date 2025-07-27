@@ -10,7 +10,8 @@ The main goal of this task was to set up a **Linux-based self-hosted agent** in 
 
 I started by provisioning a virtual machine in my cloud environment using Ubuntu 22.04 as the base image. Once the provisioning was complete and the VM was up and running,
 
-![self-hosted-agent](./snapshots/vm-created.png)
+<img width="1918" height="1028" alt="vm-created" src="https://github.com/user-attachments/assets/ccbb9eec-9791-4232-aa14-99f82ec96b50" />
+
 
 I accessed it via SSH from my local system.
 
@@ -18,7 +19,8 @@ I accessed it via SSH from my local system.
 ssh azureuser@<your-vm-public-ip>
 ```
 
-![logged-to-vm](./snapshots/logged-to-vm.png)
+<img width="1918" height="888" alt="logged-to-vm" src="https://github.com/user-attachments/assets/582da43c-8439-49aa-805c-c3eca6895a49" />
+
 
 ---
 
@@ -29,16 +31,19 @@ After logging into the VM, I moved to my Azure DevOps Organization to configure 
 1. Navigated to my **Azure DevOps Project**
 2. Clicked on **Project Settings** → **Agent Pools** (under Pipelines)
 
-![agent-pool](./snapshots/csi-agent-pool.png)
+<img width="1918" height="1027" alt="csi-agent-pool" src="https://github.com/user-attachments/assets/5a3c958f-23b2-4f5e-9fc3-7d78d780eab7" />
+
 
 3. Selected **"Add Pool"**, gave it the name: `csi-hosted-agent-pool`
 4. Chose **"Self-hosted"** as the agent type
 
-![selft-hosted-agent](./snapshots/self-hosted-pool.png)
+<img width="1912" height="1025" alt="self-hosted-pool" src="https://github.com/user-attachments/assets/c9a5c409-9d07-487e-a828-f54c1e9cf156" />
+
 
 5. Clicked **Create** to finalize the pool
 
-![agent-pool](./snapshots/agent-pool-created.png)
+<img width="1918" height="983" alt="agent-pool-created" src="https://github.com/user-attachments/assets/00159d39-ffe7-4571-8b1e-879409157dec" />
+
 
 This pool would act as the container to register and manage any custom-hosted agents.
 
@@ -50,7 +55,8 @@ Once the pool was created, I clicked on new agent to create, Azure DevOps provid
 
 I selected **Linux** and followed the steps as below:
 
-![agent-pool-instructions](./snapshots/new-agent.png)
+<img width="1918" height="1027" alt="new-agent" src="https://github.com/user-attachments/assets/8440b246-350a-4960-ac34-74a895ef43b6" />
+
 
 1. **Downloaded the agent package** using `wget`:
 
@@ -70,7 +76,8 @@ mkdir myagent && cd myagent
 tar zxvf ../vsts-agent-linux-x64-3.236.0.tar.gz
 ```
 
-![extract-agent](./snapshots/downloaded-agent.png)
+<img width="1918" height="1062" alt="downloaded-agent" src="https://github.com/user-attachments/assets/8889b2b0-b74e-4ed6-8850-446cc73d9d46" />
+
 
 ---
 
@@ -93,7 +100,10 @@ Then, I went back to the Azure DevOps portal:
 2. Created a new token named `csi-agent-pat` (for demo/testing)
 3. Granted **full access** for initial setup (Note: this is **not recommended** for production; use scoped access)
 
-![agent-pat](./snapshots/pat-created.png)
+
+<img width="1918" height="950" alt="pat-created" src="https://github.com/user-attachments/assets/8efbb507-40c5-4417-a6b9-739bcdc87778" />
+
+
 
 Back on the VM, I entered the PAT when prompted and continued with the setup:
 
@@ -102,7 +112,8 @@ Back on the VM, I entered the PAT when prompted and continued with the setup:
 
 Once the configuration completed successfully, the agent was now registered with Azure DevOps.
 
-![agent-created](./snapshots/hosted-agent-created.png)
+<img width="1918" height="1047" alt="hosted-agent-created" src="https://github.com/user-attachments/assets/6426b0f8-0636-45e4-a4a0-d5d95ef0e2df" />
+
 
 ---
 
@@ -114,7 +125,8 @@ To run the agent so it can pick up jobs from the pipeline, I executed:
 ./run.sh
 ```
 
-![agent-running](./snapshots/run-agent.png)
+![a<img width="1918" height="1070" alt="run-agent" src="https://github.com/user-attachments/assets/fcaab08b-6ff5-410a-9c9e-75b3d22442c3" />
+
 
 This started the agent and it began polling Azure DevOps for available jobs.
 
@@ -128,7 +140,8 @@ To verify if everything worked correctly:
 2. Went to **Agent Pools** → `csi-hosted-agent-pool`
 3. There I saw the `csi-agent` showing as **Online** 
 
-![agent-online](./snapshots/csi-agent-online.png)
+<img width="1918" height="686" alt="csi-agent-online" src="https://github.com/user-attachments/assets/0aa4fe31-de6b-4c6c-9b8e-ad42fa363d71" />
+
 
 This confirmed that my self-hosted agent was live and ready to handle builds and releases.
 
@@ -147,15 +160,18 @@ steps:
     displayName: "Verify Self-Hosted Agent"
 ```
 
-![test-pipeline](./snapshots/test-pipeline.png)
+<img width="1918" height="902" alt="test-pipeline" src="https://github.com/user-attachments/assets/2d105a36-e0e5-4433-8620-f5e8b70db179" />
+
 
 This job executed successfully on the self-hosted agent, marking the completion of Task.
 
-![job-success](./snapshots/agent-job-success.png)
+<img width="1918" height="907" alt="agent-job-success" src="https://github.com/user-attachments/assets/9bde972b-f40d-4f54-8bf1-0f3645a9e26f" />
+
 
 Finally to verify that weather those jobs are correctly executed under created self hosted agent pool, for that i went to agent pools under `csi-agent-pool` all executed jobs are listed. Hence my self hosted linux agent working as expected
 
-![job-list](./snapshots/job-list.png)
+<img width="1918" height="973" alt="job-list" src="https://github.com/user-attachments/assets/fde51db5-f511-4e53-a45a-199c0518edcd" />
+
 
 With the self-hosted agent in place, I used it for all upcoming tasks in this week — including pipeline variables, variable groups, scoped values per environment, and gated release approvals.
 
